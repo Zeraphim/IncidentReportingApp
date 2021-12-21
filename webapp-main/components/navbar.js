@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import defaultUser from "../assets/Profile.svg";
 
 export default class Navbar extends Component {
   render() {
@@ -45,8 +46,25 @@ export default class Navbar extends Component {
 function UserButton() {
   let username = "John Doe";
   return (
-    <div className="px-5 py-2 bg-gray-200 rounded-3xl text-md hover:bg-gray-400">
-      {username}
+    <div className="px-5 py-2 bg-gray-200 rounded-3xl text-md hover:bg-gray-400 flex flex-row items-center">
+      <img className="mr-5" src={defaultUser} />
+      <p className="mr-16">{username}</p>
+      <svg
+        width="11"
+        height="7"
+        viewBox="0 0 11 7"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className=""
+      >
+        <path
+          d="M9.875 1.3125L5.5 5.6875L1.125 1.3125"
+          stroke="#130F26"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
     </div>
   );
 }
