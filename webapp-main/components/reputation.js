@@ -7,11 +7,11 @@ export default class Reputation extends Component {
         <div className="p-5 bg-gray-100 h-auto rounded-md shadow invisible lg:visible">
           <div className="grid grid-cols-2 mb-3">
             <div className="col-span-1">
-              <p className="text-sm 2xl:text-lg">Post Reputation</p>
+              <p className="text-sm 2xl:text-md">Post Reputation</p>
               <p className="font-bold font-number text-2xl">0</p>
             </div>
             <div className="col-span-1">
-              <p className="text-sm 2xl:text-lg">Comment Reputation</p>
+              <p className="text-sm 2xl:text-md">Comment Reputation</p>
               <p className="font-bold font-number text-2xl">0</p>
             </div>
           </div>
