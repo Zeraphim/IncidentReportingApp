@@ -6,6 +6,12 @@
     "start": "next start"
   },
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "next": "latest",
+    "next-images": "^1.8.4",
+    "react": "^17.0.2",
+>>>>>>> cecb508d785a905c90be076a1442e8a8c5bb4b8f
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
