@@ -5,10 +5,10 @@ export default class Weather extends Component{
         return(
             <>
                 <div className= "p-5 bg-gradient-to-r from-cyan-300 to-cyan-700 h-auto rounded-md shadow invisible lg:visible">
-                    <div className="grid grid-cols-1 mb-3">
+                    <div className="flex items-center space-x-4">
                         <div className="col-span-1">
-                            <div class="weather-image">
-                                <svg class="h-8 w-8 text-orange-500" justify-content="center" viewBox="0 0 24 24"  fill="orange"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <circle cx="12" cy="12" r="5" />  <line x1="12" y1="1" x2="12" y2="3" />  <line x1="12" y1="21" x2="12" y2="23" />  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />  <line x1="1" y1="12" x2="3" y2="12" />  <line x1="21" y1="12" x2="23" y2="12" />  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" /></svg>
+                            <div className="weather-image">
+                            <svg class="h-12 w-12 text-orange-500"  viewBox="0 0 24 24"  fill="orange"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <circle cx="12" cy="12" r="5" />  <line x1="12" y1="1" x2="12" y2="3" />  <line x1="12" y1="21" x2="12" y2="23" />  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />  <line x1="1" y1="12" x2="3" y2="12" />  <line x1="21" y1="12" x2="23" y2="12" />  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" /></svg>
                                 </div>
                             </div> 
                             <br/>
