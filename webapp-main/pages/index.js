@@ -3,6 +3,7 @@ import Reputation from "../components/reputation";
 import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
 import NewPostModal from "../components/newPostModal";
+import Weather from "../components/weather";
 
 export default function Home() {
   return (
@@ -20,6 +21,9 @@ export default function Home() {
         </div>
         <div className="col-span-3 bg-gray-600 h-screen hidden lg:block">
           <Reputation />
+        </div>
+        <div className="bg-gray-600 h-screen col-span-10 lg:col-span-5">
+          <Weather />
         </div>
       </div>
     </>
