@@ -17,14 +17,14 @@ export default function Home() {
           <Sidebar />
         </div>
         <div className="bg-gray-600 h-screen col-span-10 lg:col-span-5">
-          <NewPostModal />
+          <Weather />
         </div>
         <div className="col-span-3 bg-gray-600 h-screen hidden lg:block">
           <Reputation />
         </div>
         <div className="bg-gray-600 h-screen col-span-10 lg:col-span-5">
-          <Weather />
-        </div>
+          <NewPostModal />
+        </div> 
       </div>
     </>
   );
