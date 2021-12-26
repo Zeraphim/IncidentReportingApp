@@ -17,7 +17,7 @@ export default class Weather extends Component{
                                 <p className="text-xs font-bold text-white">Enjoy the sun. </p>
                             </div>
                             <div class="temp-value">
-                                <p className="text-2xl font-extrabold text-amber-600">29°C</p>
+                                <p className="text-2xl font-extrabold text-orange-500">29°C</p>
                             </div>
                             <div class="location">
                                 <p className="text-lg font-bold text-white">Makati, Philippines</p>
