@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 export default class Weather extends Component{
-    render( {
+    render() {
         return(
             <>
                 <div className= "p-5 bg-gray-100 h-auto rounded-md shadow invisible lg:visible">
@@ -21,5 +21,5 @@ export default class Weather extends Component{
             </>
 
         )
-    })
+    }
 }
