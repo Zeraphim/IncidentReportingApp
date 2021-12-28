@@ -18,13 +18,11 @@ export default function Home() {
         </div>
         <div className="bg-gray-600 h-screen col-span-10 lg:col-span-5">
           <Weather />
+          <NewPostModal />
         </div>
         <div className="col-span-3 bg-gray-600 h-screen hidden lg:block">
           <Reputation />
         </div>
-        <div className="bg-gray-600 h-screen col-span-10 lg:col-span-5">
-          <NewPostModal />
-        </div> 
       </div>
     </>
   );
