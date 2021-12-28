@@ -6,9 +6,9 @@ export default class Navbar extends Component {
     return (
       <div className="w-full hidden lg:block mb-3 shadow py-3">
         <nav className="flex grid grid-cols-10 gap-x-4 mx-8 xl:mx-16 2xl:mx-64 items-center">
-          <a href="#" class="flex col-span-2 items-center">
+          <a href="#" className="flex col-span-2 items-center">
             <svg
-              class="mr-3 h-10"
+              className="mr-3 h-10"
               viewBox="0 0 52 72"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -26,13 +26,13 @@ export default class Navbar extends Component {
                 fill="#1C64F2"
               />
             </svg>
-            <span class="self-center text-4xl font-extrabold whitespace-nowrap dark:text-white">
+            <span className="self-center text-4xl font-extrabold whitespace-nowrap dark:text-white">
               AGAP
             </span>
           </a>
           <div className="col-span-5"></div>
           <div className="col-span-3 flow-root">
-            <div class="hidden w-full md:block md:w-auto flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium items-center float-right">
+            <div className="hidden w-full md:block md:w-auto flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium items-center float-right">
               {UserButton()}
             </div>
           </div>
@@ -59,9 +59,9 @@ function UserButton() {
         <path
           d="M9.875 1.3125L5.5 5.6875L1.125 1.3125"
           stroke="#130F26"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     </button>
