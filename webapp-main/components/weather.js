@@ -4,7 +4,7 @@ export default class Weather extends Component {
   render() {
     return (
       <>
-        <div className="p-5 bg-gradient-to-r from-cyan-300 to-cyan-700 h-auto rounded-md shadow invisible lg:visible">
+        <div className="p-5 bg-gradient-to-r from-cyan-300 to-cyan-700 h-auto rounded-md shadow invisible lg:visible mb-2">
           <div className="flex items-center space-x-4">
             <div className="col-span-1">
               <div className="weather-image">
@@ -32,7 +32,7 @@ export default class Weather extends Component {
             </div>
             <br />
             <div className="col-span-1">
-              <div className="weather-description">
+              <div class="weather-description mb-3">
                 <p className="text-xs font-bold text-white">Enjoy the sun. </p>
               </div>
               <div className="temp-value">
