@@ -5,9 +5,34 @@ import Navbar from "../components/navbar";
 import NewPostModal from "../components/newPostModal";
 import Weather from "../components/weather";
 
+import cookie from "js-cookie";
+
+import { NextApiRequest, NextApiResponses } from 'next' 
+
+function checkSID() {
+  console.log(cookie.get("SID"))
+
+  if(cookie.get("SID") === undefined) {
+    // Redirect to login
+    console.log("NO SID")
+  }
+
+}
+
+// For testing
+function addSID() {
+  cookie.set("SID", "ABCD", { expires: 1/24 });
+}
+
+// For testing
+function removeSID() {
+  cookie.remove("SID");
+}
+
 export default function Home() {
   return (
     <>
+      { checkSID() }
       <Head>
         <title>AGAP - The Social Safety Network</title>
       </Head>
@@ -27,3 +52,4 @@ export default function Home() {
     </>
   );
 }
+

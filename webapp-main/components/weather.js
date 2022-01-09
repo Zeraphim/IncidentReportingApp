@@ -9,13 +9,13 @@ export default class Weather extends Component {
             <div className="col-span-1">
               <div className="weather-image">
                 <svg
-                  class="h-12 w-12 text-orange-500"
+                  className="h-12 w-12 text-orange-500"
                   viewBox="0 0 24 24"
                   fill="orange"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap ="round"
+                  strokeLinejoin="round"
                 >
                   {" "}
                   <circle cx="12" cy="12" r="5" />{" "}
@@ -35,10 +35,10 @@ export default class Weather extends Component {
               <div class="weather-description mb-3">
                 <p className="text-xs font-bold text-white">Enjoy the sun. </p>
               </div>
-              <div class="temp-value">
+              <div className="temp-value">
                 <p className="text-2xl font-extrabold text-orange-500">29°C</p>
               </div>
-              <div class="location">
+              <div className="location">
                 <p className="text-lg font-bold text-white">
                   Makati, Philippines
                 </p>
