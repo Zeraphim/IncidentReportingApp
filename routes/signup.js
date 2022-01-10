@@ -14,8 +14,8 @@ router.post("/", (req, res, next) => {
     date-input: Date,
     email: string,
     fname: string,
-    lname, string,
-    password, string (IMPORTANT: SAVE STRING AS IS. Any modification will render the hash invalid upon comparison.)
+    lname: string,
+    password: string (IMPORTANT: SAVE STRING AS IS. Any modification will render the hash invalid upon comparison.)
 }*/
 
 module.exports = router;
