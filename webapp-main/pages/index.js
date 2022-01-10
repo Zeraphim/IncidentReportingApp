@@ -7,21 +7,20 @@ import Weather from "../components/weather";
 
 import cookie from "js-cookie";
 
-import { NextApiRequest, NextApiResponses } from 'next' 
+import { NextApiRequest, NextApiResponses } from "next";
 
 function checkSID() {
-  console.log(cookie.get("SID"))
+  console.log(cookie.get("SID"));
 
-  if(cookie.get("SID") === undefined) {
+  if (cookie.get("SID") === undefined) {
     // Redirect to login
-    console.log("NO SID")
+    console.log("NO SID");
   }
-
 }
 
 // For testing
 function addSID() {
-  cookie.set("SID", "ABCD", { expires: 1/24 });
+  cookie.set("SID", "ABCD", { expires: 1 / 24 });
 }
 
 // For testing
@@ -32,7 +31,7 @@ function removeSID() {
 export default function Home() {
   return (
     <>
-      { checkSID() }
+      {checkSID()}
       <Head>
         <title>AGAP - The Social Safety Network</title>
       </Head>
@@ -41,7 +40,7 @@ export default function Home() {
         <div className="col-span-2 bg-gray-600 h-screen hidden lg:block">
           <Sidebar />
         </div>
-        <div className="bg-gray-600 h-screen col-span-10 lg:col-span-5">
+        <div className="bg-gray-600 h-screen col-span-10 lg:col-span-5 overflow-auto">
           <Weather />
           <NewPostModal />
         </div>
@@ -52,4 +51,3 @@ export default function Home() {
     </>
   );
 }
-
