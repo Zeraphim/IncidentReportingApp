@@ -1,5 +1,5 @@
-const express = require("express");
-const router = express.Router();
+const express = require("express"),
+  login = require("./routes/login");
 
 const app = express();
 
@@ -13,18 +13,7 @@ app.use((req, res, next) => {
   );
   next();
 });
-
-app.use((req, res, next) => {
-  res.send("Welcome to Express");
-});
-
-router.get("/login", (req, res, next) => {
-  // get placeholder
-});
-
-router.get("/signup", (req, res, next) => {
-  // get placeholder
-});
+app.use("/login", login);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
