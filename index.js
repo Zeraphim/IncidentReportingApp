@@ -1,5 +1,6 @@
 const express = require("express"),
   login = require("./routes/login");
+signup = require("./routes/signup");
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use("/login", login);
+app.use("/signup", signup);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

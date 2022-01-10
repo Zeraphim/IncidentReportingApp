@@ -9,4 +9,6 @@ router.post("/", (req, res, next) => {
   );
 });
 
+// Placeholder/test. Login should receive plain-text password to be compared with the hash of the user using bcrypt.compare().
+
 module.exports = router;

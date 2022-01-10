@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import OnboardingNavBar from "../components/navbar_onboarding";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import bcrypt from "bcryptjs";
 
 export default function Login() {
   const { register, handleSubmit } = useForm();
   const upload = (data) => {
+    data["password"] = bcrypt.hashSync(data["password"], 8);
     axios
       .post("http://localhost:5000/login", data)
       .then(function (response) {
@@ -49,7 +51,6 @@ export default function Login() {
                       id="email"
                       type="email"
                       placeholder="johndoe@agap.ph"
-                      name="email"
                       {...register("email", { required: true })}
                     ></input>
                   </div>
@@ -63,7 +64,6 @@ export default function Login() {
                     id="password"
                     type="password"
                     placeholder="Password"
-                    name="password"
                     {...register("password", { required: true })}
                   ></input>
                 </div>
