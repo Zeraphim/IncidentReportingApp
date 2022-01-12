@@ -8,46 +8,36 @@ import cookie from "js-cookie";
 
 import { useRef, useState } from "react";
 
-import {login, useAuth} from "./firebase";
+import { login, useAuth } from "../modules/firebase";
 
 function addCookie(val) {
   cookie.set("SID", val, { expires: 1 / 24 });
 }
 
 export default function Login() {
-
   // Firebase Login
-  const [ loading, setLoading ] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { register, handleSubmit } = useForm();
   const upload = (data) => {
-    data["password"] = bcrypt.hashSync(data["password"], 8);
-    axios
-      .post("http://localhost:5000/login", data)
-      .then(function (response) {
-        alert(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    handleLogin(data);
   };
 
-  async function handleLogin() {
+  async function handleLogin(data) {
     setLoading(true);
     try {
-      await login(document.getElementById("email").value, document.getElementById("password").value);
+      await login(data["email"], data["password"]);
     } catch {
       alert("Error!");
     }
     setLoading(false);
 
-    console.log("Login Successful!")
+    console.log("Login Successful!");
 
-    addCookie(document.getElementById("email").value);
+    addCookie(data["email"]);
 
-    window.location.replace('/')
+    window.location.replace("/");
   }
-
 
   return (
     <div className="h-screen">
@@ -104,7 +94,6 @@ export default function Login() {
                 <button
                   class="shadow bg-blue-400 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full"
                   type="submit"
-                  onClick={handleLogin}
                 >
                   Login
                 </button>

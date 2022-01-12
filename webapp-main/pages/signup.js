@@ -6,58 +6,41 @@ import bcrypt from "bcryptjs";
 import DatePicker from "react-datepicker";
 import Select from "react-select";
 
-
-
 import { useRef, useState } from "react";
-import { signup } from "./firebase";
-
+import { signup } from "../modules/firebase";
 
 export default function Signup() {
-
   // Firebase
-  const [ loading, setLoading ] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { control, register, handleSubmit } = useForm();
   const city = 1;
 
-
   const [email, setEmail] = useState(" ");
 
-  const handleInput = event => {
+  const handleInput = (event) => {
     setEmail(event.target.value);
   };
 
-
-  async function handleSignup() {
-
+  async function handleSignup(data) {
     setLoading(true);
     // try {
-      await signup(document.getElementById("email").value, document.getElementById("password").value);
+    await signup(data["email"], data["password"]);
     // } catch {
-      // alert("Error!");
+    // alert("Error!");
     // }
     setLoading(false);
 
-    console.log("Signup Successful")
+    console.log("Signup Successful");
 
-    window.location.replace('/login')
+    window.location.replace("/login");
   }
-
 
   const setCity = (value) => {
     city = value;
   };
   const upload = (data) => {
-    data["city"] = options[city - 1].label;
-    console.log(data);
-    axios
-      .post("http://localhost:5000/signup", data)
-      .then(function (response) {
-        alert(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    handleSignup(data);
   };
   const options = [
     { value: "1", label: "Caloocan" },
@@ -78,7 +61,6 @@ export default function Signup() {
     { value: "16", label: "Muntinlupa" },
   ];
   return (
-    
     <div className="h-screen">
       <OnboardingNavBar />
       <div className="mx-8 xl:mx-16 2xl:mx-64 grid grid-rows-2 lg:grid-cols-2 lg:grid-rows-none justify-items-center items-center lg:h-3/4">
@@ -202,7 +184,6 @@ export default function Signup() {
                 <button
                   class="shadow bg-blue-400 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full"
                   type="submit"
-                  onClick={handleSignup}
                 >
                   Sign up
                 </button>

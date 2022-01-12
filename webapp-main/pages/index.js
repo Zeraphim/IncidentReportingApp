@@ -7,32 +7,30 @@ import Weather from "../components/weather";
 
 import cookie from "js-cookie";
 
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 import { NextApiRequest, NextApiResponses } from "next";
 import Post from "../components/post";
 
 import { useRef, useState } from "react";
-import { signup, login, logout, useAuth } from "./firebase";
+import { signup, login, logout, useAuth } from "../modules/firebase";
 
 // Checks if there's a cookie in the browser, if there's none redirect to login page
 function checkSID() {
-
-  const router = useRouter()
+  const router = useRouter();
 
   console.log(cookie.get("SID"));
 
   if (cookie.get("SID") === undefined) {
-    
     console.log("NO SID");
 
     // Redirect to login after 2 seconds
     useEffect(() => {
       setTimeout(() => {
-        router.push('/login');
-      }, 2000)
-    }, [])
+        router.push("/login");
+      }, 2000);
+    }, []);
   }
 }
 
@@ -47,15 +45,14 @@ function removeSID() {
 }
 
 export default function Home() {
-
-  const [ loading, setLoading ] = useState(false);
+  const [loading, setLoading] = useState(false);
   const currentUser = useAuth();
   const emailRef = useRef();
   const passwordRef = useRef();
 
   const post = {
     // John Doe
-    owner: currentUser?.email, //will change to owner_id. owner_id == user_id to fetch user data.
+    owner: currentUser?.uid, //will change to owner_id. owner_id == user_id to fetch user data.
     user_type: 0,
     location: "Pelepens",
     content: {
@@ -72,7 +69,7 @@ export default function Home() {
       <Head>
         <title>AGAP - The Social Safety Network</title>
       </Head>
-      <Navbar />
+      <Navbar data={post} />
       <div className="flex grid grid-cols-10 justify-center mx-2 xl:mx-16 2xl:mx-64 gap-x-4">
         <div className="col-span-2 bg-gray-600 h-screen hidden lg:block">
           <Sidebar />

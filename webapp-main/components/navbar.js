@@ -33,7 +33,7 @@ export default class Navbar extends Component {
           <div className="col-span-5"></div>
           <div className="col-span-3 flow-root">
             <div className="hidden w-full md:block md:w-auto flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium items-center float-right">
-              {UserButton()}
+              {UserButton(this.props.data)}
             </div>
           </div>
         </nav>
@@ -42,8 +42,8 @@ export default class Navbar extends Component {
   }
 }
 
-function UserButton() {
-  let username = "John Doe";
+function UserButton(data) {
+  let username = data.owner;
   return (
     <button className="px-5 py-2 bg-gray-200 rounded-3xl text-md hover:bg-gray-400 flex flex-row items-center">
       <img className="mr-5" src={defaultUser} />
