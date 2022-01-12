@@ -18,9 +18,6 @@ export default function Login() {
 
   // Firebase Login
   const [ loading, setLoading ] = useState(false);
-  const currentUser = useAuth();
-  const emailRef = useRef();
-  const passwordRef = useRef();
 
   const { register, handleSubmit } = useForm();
   const upload = (data) => {
