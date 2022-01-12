@@ -7,15 +7,29 @@ import Weather from "../components/weather";
 
 import cookie from "js-cookie";
 
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+
 import { NextApiRequest, NextApiResponses } from "next";
 import Post from "../components/post";
 
+// Checks if there's a cookie in the browser, if there's none redirect to login page
 function checkSID() {
+
+  const router = useRouter()
+
   console.log(cookie.get("SID"));
 
   if (cookie.get("SID") === undefined) {
-    // Redirect to login
+    
     console.log("NO SID");
+
+    // Redirect to login after 2 seconds
+    useEffect(() => {
+      setTimeout(() => {
+        router.push('/login');
+      }, 2000)
+    }, [])
   }
 }
 
