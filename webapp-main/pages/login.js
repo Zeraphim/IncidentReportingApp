@@ -4,18 +4,21 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import bcrypt from "bcryptjs";
 
+import cookie from "js-cookie";
+
 import { useRef, useState } from "react";
 
 import { signup, login, logout, useAuth } from "./firebase";
+
+function addCookie(val) {
+  cookie.set("SID", val, { expires: 1 / 24 });
+}
 
 export default function Login() {
 
   // Firebase Login
   const [ loading, setLoading ] = useState(false);
   const currentUser = useAuth();
-
-  const emailRef = useRef();
-  const passwordRef = useRef();
 
   const { register, handleSubmit } = useForm();
   const upload = (data) => {
@@ -29,6 +32,24 @@ export default function Login() {
         console.log(error);
       });
   };
+
+  async function handleLogin() {
+    setLoading(true);
+    try {
+      await login(document.getElementById("email").value, document.getElementById("password").value);
+    } catch {
+      alert("Error!");
+    }
+    setLoading(false);
+
+    console.log("Login Successful!")
+
+    addCookie(document.getElementById("email").value);
+
+    window.location.replace('/')
+  }
+
+
   return (
     <div className="h-screen">
       <OnboardingNavBar />
@@ -84,6 +105,7 @@ export default function Login() {
                 <button
                   class="shadow bg-blue-400 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full"
                   type="submit"
+                  onClick={handleLogin}
                 >
                   Login
                 </button>

@@ -6,16 +6,10 @@ import bcrypt from "bcryptjs";
 import DatePicker from "react-datepicker";
 import Select from "react-select";
 
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-
 
 
 import { useRef, useState } from "react";
 import { signup, login, logout, useAuth } from "./firebase";
-
-
-import cookie from "js-cookie";
 
 
 export default function Signup() {
@@ -44,7 +38,7 @@ export default function Signup() {
     // }
     setLoading(false);
 
-    console.log("Login Successful")
+    console.log("Signup Successful")
 
     window.location.replace('/login')
   }
