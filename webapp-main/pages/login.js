@@ -4,7 +4,19 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import bcrypt from "bcryptjs";
 
+import { useRef, useState } from "react";
+
+import { signup, login, logout, useAuth } from "./firebase";
+
 export default function Login() {
+
+  // Firebase Login
+  const [ loading, setLoading ] = useState(false);
+  const currentUser = useAuth();
+
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
   const { register, handleSubmit } = useForm();
   const upload = (data) => {
     data["password"] = bcrypt.hashSync(data["password"], 8);
@@ -79,7 +91,7 @@ export default function Login() {
               <div>
                 <p className="text-sm text-gray-500 text-center">
                   Need an account?{" "}
-                  <a href="./signup" className="hover:text-black">
+                  <a href="/signup" className="hover:text-black">
                     Sign up now.
                   </a>
                 </p>
