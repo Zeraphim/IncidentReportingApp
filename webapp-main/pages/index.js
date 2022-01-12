@@ -8,6 +8,7 @@ import Weather from "../components/weather";
 import cookie from "js-cookie";
 
 import { NextApiRequest, NextApiResponses } from "next";
+import Post from "../components/post";
 
 function checkSID() {
   console.log(cookie.get("SID"));
@@ -28,6 +29,18 @@ function removeSID() {
   cookie.remove("SID");
 }
 
+const post = {
+  owner: "John Doe", //will change to owner_id. owner_id == user_id to fetch user data.
+  user_type: 0,
+  location: "Pelepens",
+  content: {
+    type: "text",
+    caption: "This is a test.",
+    date: "Now",
+    content_link: "",
+  },
+};
+
 export default function Home() {
   return (
     <>
@@ -43,6 +56,7 @@ export default function Home() {
         <div className="bg-gray-600 h-screen col-span-10 lg:col-span-5 overflow-auto">
           <Weather />
           <NewPostModal />
+          <Post post={post} />
         </div>
         <div className="col-span-3 bg-gray-600 h-screen hidden lg:block">
           <Reputation />
