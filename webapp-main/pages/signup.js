@@ -6,7 +6,8 @@ import bcrypt from "bcryptjs";
 import DatePicker from "react-datepicker";
 import Select from "react-select";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import { collection, doc, setDoc, getDocs } from "firebase/firestore";
 import { signup } from "../modules/firebase";
 
 export default function Signup() {
@@ -25,15 +26,13 @@ export default function Signup() {
   async function handleSignup(data) {
     setLoading(true);
     // try {
-    await signup(data["email"], data["password"]);
+    await signup(data);
     // } catch {
     // alert("Error!");
     // }
     setLoading(false);
 
     console.log("Signup Successful");
-
-    window.location.replace("/login");
   }
 
   const setCity = (value) => {

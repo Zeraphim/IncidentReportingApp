@@ -9,6 +9,8 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { collection, doc, setDoc, getDocs, getDoc } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -28,9 +30,9 @@ const auth = getAuth();
 export function signup(data) {
   const email = data["email"];
   const password = data["password"];
-  return createUserWithEmailAndPassword(auth, email, password).then(
-    (user) => {}
-  );
+  return createUserWithEmailAndPassword(auth, email, password).then((user) => {
+    push_signup(user, data);
+  });
 }
 
 export function login(email, password) {
@@ -51,4 +53,28 @@ export function useAuth() {
   }, []);
 
   return currentUser;
+}
+
+async function push_signup(user, data) {
+  const db = getFirestore();
+  const ref = collection(db, "users");
+  await setDoc(doc(ref, user.user.uid), {
+    id: user.user.uid,
+    fName: data.fname,
+    lName: data.lname,
+    city: data.city,
+    email: data.email,
+    points: {
+      post_points: 0,
+      comment_points: 0,
+    },
+    posts: {},
+  });
+}
+
+export async function retrieveUserData(uid) {
+  const db = getFirestore();
+  const ref = doc(db, "users", uid);
+  const querySnapshot = await getDoc(ref);
+  return querySnapshot.data();
 }
