@@ -13,6 +13,9 @@ import { useRouter } from 'next/router'
 import { NextApiRequest, NextApiResponses } from "next";
 import Post from "../components/post";
 
+import { useRef, useState } from "react";
+import { signup, login, logout, useAuth } from "./firebase";
+
 // Checks if there's a cookie in the browser, if there's none redirect to login page
 function checkSID() {
 
@@ -43,19 +46,26 @@ function removeSID() {
   cookie.remove("SID");
 }
 
-const post = {
-  owner: "John Doe", //will change to owner_id. owner_id == user_id to fetch user data.
-  user_type: 0,
-  location: "Pelepens",
-  content: {
-    type: "text",
-    caption: "This is a test.",
-    date: "Now",
-    content_link: "",
-  },
-};
-
 export default function Home() {
+
+  const [ loading, setLoading ] = useState(false);
+  const currentUser = useAuth();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
+  const post = {
+    // John Doe
+    owner: currentUser?.email, //will change to owner_id. owner_id == user_id to fetch user data.
+    user_type: 0,
+    location: "Pelepens",
+    content: {
+      type: "text",
+      caption: "This is a test.",
+      date: "Now",
+      content_link: "",
+    },
+  };
+
   return (
     <>
       {checkSID()}

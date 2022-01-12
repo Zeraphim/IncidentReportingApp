@@ -9,7 +9,7 @@ import Select from "react-select";
 
 
 import { useRef, useState } from "react";
-import { signup, login, logout, useAuth } from "./firebase";
+import { signup } from "./firebase";
 
 
 export default function Signup() {

@@ -8,7 +8,7 @@ import cookie from "js-cookie";
 
 import { useRef, useState } from "react";
 
-import { signup, login, logout, useAuth } from "./firebase";
+import {login, useAuth} from "./firebase";
 
 function addCookie(val) {
   cookie.set("SID", val, { expires: 1 / 24 });
@@ -19,6 +19,8 @@ export default function Login() {
   // Firebase Login
   const [ loading, setLoading ] = useState(false);
   const currentUser = useAuth();
+  const emailRef = useRef();
+  const passwordRef = useRef();
 
   const { register, handleSubmit } = useForm();
   const upload = (data) => {
