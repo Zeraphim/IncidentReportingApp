@@ -54,7 +54,6 @@ export default function Signup() {
     city = value;
   };
   const upload = (data) => {
-    data["password"] = bcrypt.hashSync(data["password"], 8);
     data["city"] = options[city - 1].label;
     console.log(data);
     axios
