@@ -25,7 +25,9 @@ export default class Sidebar extends Component {
           </ul>
           <div className="mb-5">
             <p>Your current location is</p>
-            <p className="text-xl font-bold">Makati, Philippines</p>
+            <p className="text-xl font-bold">
+              {this.props.user.city}, Philippines
+            </p>
             <Link href="/settings/location">
               <a>Is this wrong?</a>
             </Link>

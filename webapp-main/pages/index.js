@@ -61,6 +61,10 @@ export default function Home() {
     email: "nil",
     location: "nil",
     id: "AGAPWEBAPP",
+    points: {
+      post_points: 0,
+      comment_points: 0,
+    },
   });
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
@@ -114,16 +118,16 @@ export default function Home() {
         </Head>
         <Navbar data={userData} />
         <div className="flex grid grid-cols-10 justify-center mx-2 xl:mx-16 2xl:mx-64 gap-x-4">
-          <div className="col-span-2 bg-gray-600 h-screen hidden lg:block">
-            <Sidebar />
+          <div className="col-span-2  h-screen hidden lg:block">
+            <Sidebar user={userData} />
           </div>
-          <div className="bg-gray-600 h-screen col-span-10 lg:col-span-5 overflow-auto">
+          <div className=" h-screen col-span-10 lg:col-span-5 overflow-auto">
             <Weather />
             <NewPostModal />
             <PostFactory user={userData} />
           </div>
-          <div className="col-span-3 bg-gray-600 h-screen hidden lg:block">
-            <Reputation />
+          <div className="col-span-3  h-screen hidden lg:block">
+            <Reputation user={userData} />
           </div>
         </div>
       </>
