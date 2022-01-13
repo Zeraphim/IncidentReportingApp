@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import defaultUser from "../assets/Profile.svg";
 
 export default class Navbar extends Component {
+  constructor(props) {
+    super();
+  }
   render() {
     return (
       <div className="w-full hidden lg:block mb-3 shadow py-3">
@@ -43,7 +46,7 @@ export default class Navbar extends Component {
 }
 
 function UserButton(data) {
-  let username = data.owner;
+  let username = `${data.fName} ${data.lName}`;
   return (
     <button className="px-5 py-2 bg-gray-200 rounded-3xl text-md hover:bg-gray-400 flex flex-row items-center">
       <img className="mr-5" src={defaultUser} />
