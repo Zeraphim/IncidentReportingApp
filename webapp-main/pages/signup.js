@@ -6,42 +6,58 @@ import bcrypt from "bcryptjs";
 import DatePicker from "react-datepicker";
 import Select from "react-select";
 
+import { useRef, useState, useEffect } from "react";
+import { collection, doc, setDoc, getDocs } from "firebase/firestore";
+import { signup } from "../modules/firebase";
+
 export default function Signup() {
+  // Firebase
+  const [loading, setLoading] = useState(false);
+
   const { control, register, handleSubmit } = useForm();
   const city = 1;
+
+  const [email, setEmail] = useState(" ");
+
+  const handleInput = (event) => {
+    setEmail(event.target.value);
+  };
+
+  async function handleSignup(data) {
+    setLoading(true);
+    // try {
+    await signup(data);
+    // } catch {
+    // alert("Error!");
+    // }
+    setLoading(false);
+
+    console.log("Signup Successful");
+  }
+
   const setCity = (value) => {
     city = value;
   };
   const upload = (data) => {
-    data["password"] = bcrypt.hashSync(data["password"], 8);
-    data["city"] = options[city - 1].label;
-    console.log(data);
-    axios
-      .post("http://localhost:5000/signup", data)
-      .then(function (response) {
-        alert(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    handleSignup(data);
   };
   const options = [
-    { value: "1", label: "Caloocan" },
-    { value: "2", label: "Malabon" },
-    { value: "3", label: "Navotas" },
-    { value: "4", label: "Valenzuela" },
-    { value: "5", label: "Quezon City" },
-    { value: "6", label: "Marikina" },
-    { value: "7", label: "Pasig" },
-    { value: "8", label: "Taguig" },
-    { value: "9", label: "Makati" },
-    { value: "10", label: "Manila" },
-    { value: "11", label: "Mandaluyong" },
-    { value: "12", label: "San Juan" },
-    { value: "13", label: "Pasay" },
-    { value: "14", label: "Paranaque" },
-    { value: "15", label: "Las Pinas" },
-    { value: "16", label: "Muntinlupa" },
+    { value: "1", label: "Caloocan", id: "caloocan" },
+    { value: "2", label: "Malabon", id: "malabon" },
+    { value: "3", label: "Navotas", id: "navotas" },
+    { value: "4", label: "Valenzuela", id: "valenzuela" },
+    { value: "5", label: "Quezon City", id: "qc" },
+    { value: "6", label: "Marikina", id: "marikina" },
+    { value: "7", label: "Pasig", id: "pasig" },
+    { value: "8", label: "Taguig", id: "taguig" },
+    { value: "9", label: "Makati", id: "makati" },
+    { value: "10", label: "Manila", id: "manila" },
+    { value: "11", label: "Mandaluyong", id: "mandaluyong" },
+    { value: "12", label: "San Juan", id: "sanjuan" },
+    { value: "13", label: "Pasay", id: "pasay" },
+    { value: "14", label: "Paranaque", id: "paranaque" },
+    { value: "15", label: "Las Pinas", id: "laspinas" },
+    { value: "16", label: "Muntinlupa", id: "muntinlupa" },
   ];
   return (
     <div className="h-screen">

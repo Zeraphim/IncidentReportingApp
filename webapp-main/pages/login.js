@@ -4,19 +4,41 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import bcrypt from "bcryptjs";
 
+import cookie from "js-cookie";
+
+import { useRef, useState } from "react";
+
+import { login, useAuth } from "../modules/firebase";
+
+function addCookie(val) {
+  cookie.set("SID", val, { expires: 1 / 24 });
+}
+
 export default function Login() {
+  // Firebase Login
+  const [loading, setLoading] = useState(false);
+
   const { register, handleSubmit } = useForm();
   const upload = (data) => {
-    data["password"] = bcrypt.hashSync(data["password"], 8);
-    axios
-      .post("http://localhost:5000/login", data)
-      .then(function (response) {
-        alert(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    handleLogin(data);
   };
+
+  async function handleLogin(data) {
+    setLoading(true);
+    try {
+      await login(data["email"], data["password"]);
+    } catch {
+      alert("Error!");
+    }
+    setLoading(false);
+
+    console.log("Login Successful!");
+
+    addCookie(data["email"]);
+
+    window.location.replace("/");
+  }
+
   return (
     <div className="h-screen">
       <OnboardingNavBar />
@@ -79,7 +101,7 @@ export default function Login() {
               <div>
                 <p className="text-sm text-gray-500 text-center">
                   Need an account?{" "}
-                  <a href="./signup" className="hover:text-black">
+                  <a href="/signup" className="hover:text-black">
                     Sign up now.
                   </a>
                 </p>

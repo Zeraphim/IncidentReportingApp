@@ -8,22 +8,26 @@ export default class Reputation extends Component {
           <div className="grid grid-cols-2 mb-3">
             <div className="col-span-1">
               <p className="text-sm 2xl:text-md">Post Reputation</p>
-              <p className="font-bold font-number text-2xl">0</p>
+              <p className="font-bold font-number text-2xl">
+                {this.props.user.points.post_points}
+              </p>
             </div>
             <div className="col-span-1">
               <p className="text-sm 2xl:text-md">Comment Reputation</p>
-              <p className="font-bold font-number text-2xl">0</p>
+              <p className="font-bold font-number text-2xl">
+                {this.props.user.points.comment_points}
+              </p>
             </div>
           </div>
-          {reputationStatus()}
+          {reputationStatus(this.props.user.points)}
         </div>
       </>
     );
   }
 }
 
-function reputationStatus() {
-  const reputation = 410;
+function reputationStatus(user_points) {
+  const reputation = user_points.comment_points + user_points.post_points;
   const partner = false;
   let result = <></>;
 
