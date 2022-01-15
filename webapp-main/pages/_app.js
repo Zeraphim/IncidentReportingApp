@@ -1,6 +1,7 @@
 import "tailwindcss/tailwind.css";
 import "../assets/style.css";
 import { initializeApp } from "firebase/app";
+import Map from "../components/map";
 
 function MyApp({ Component, pageProps }) {
   const firebaseConfig = {

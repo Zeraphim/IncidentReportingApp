@@ -24,6 +24,8 @@ import {
 } from "../modules/firebase";
 import PostFactory from "../components/PostFactory";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import Map from "../components/map";
+
 
 // Checks if there's a cookie in the browser, if there's none redirect to login page
 function checkSID() {
@@ -86,6 +88,11 @@ export default function Home() {
       <Redirect to="/login" />;
     }
   });
+
+  // const Map= dynamic(() => import("../components/map"),{
+  //   loading: () => "Loading...",
+  //   ssr: false
+  // });
 
   const emailRef = useRef();
   const passwordRef = useRef();
