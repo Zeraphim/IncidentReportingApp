@@ -4,6 +4,7 @@ import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
 import NewPostModal from "../components/newPostModal";
 import Weather from "../components/weather";
+import { Redirect } from "react-router-dom";
 
 import cookie from "js-cookie";
 
@@ -84,8 +85,7 @@ export default function Home() {
       }
       // ...
     } else {
-      // User is signed out
-      // ...
+      <Redirect to="/login" />;
     }
   });
 
@@ -129,8 +129,7 @@ export default function Home() {
             <Sidebar user={userData} />
           </div>
           <div className=" h-screen col-span-10 lg:col-span-5 overflow-auto">
-            <Weather />
-            <NewPostModal />
+            <NewPostModal user={userData} />
             <PostFactory user={userData} />
           </div>
           <div className="col-span-3  h-screen hidden lg:block">
