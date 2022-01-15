@@ -1,7 +1,20 @@
 import React, { Component } from "react";
+import PostAuxillary from "./PostAuxillary";
 
-export default function NewPostModal() {
+const NewPostModal = (props) => {
   const [showModal, setShowModal] = React.useState(false);
+  const [type, setType] = React.useState("none");
+  const [active, setActive] = React.useState(0);
+
+  function changeCategory(string, index) {
+    if (index === active) {
+      setActive(0);
+      setType("none");
+    } else {
+      setType(string);
+      setActive(index);
+    }
+  }
   return (
     <>
       <div
@@ -40,7 +53,7 @@ export default function NewPostModal() {
               </div>
               <div className="">
                 <div>
-                  <p className="text-sm font-semibold mb-2">John Doe</p>
+                  <p className="text-sm font-semibold mb-2">{`${props.user.fName} ${props.user.lName}`}</p>
                 </div>
 
                 <p
@@ -48,21 +61,52 @@ export default function NewPostModal() {
                   contentEditable="true"
                   data-text="Tell everyone what's going on."
                 ></p>
+                <PostAuxillary type={type} />
                 <div className="mb-5">
                   <p className="text-xs">Currently posting a report in</p>
-                  <p className="text-sm font-bold">Makati, Philippines</p>
+                  <p className="text-sm font-bold">
+                    {props.user.city}, Philippines
+                  </p>
                 </div>
                 <div className=" py-3 px-5 items-center grid grid-flow-col grid-cols-4 rounded-lg border-2 border-gray-300 gap-x-3 mb-3">
-                  <button className="col-span-1 bg-gray-300 rounded-2xl px-3 py-1 font-bold">
+                  <button
+                    className={
+                      active === 1
+                        ? "col-span-1 bg-gray-600 text-white rounded-2xl px-3 py-1 font-bold"
+                        : "col-span-1 bg-gray-300 rounded-2xl px-3 py-1 font-bold"
+                    }
+                    onClick={() => changeCategory("crime", 1)}
+                  >
                     Crime
                   </button>
-                  <button className="col-span-1 bg-gray-300 rounded-2xl px-3 py-1 font-bold">
+                  <button
+                    className={
+                      active === 2
+                        ? "col-span-1 bg-gray-600 text-white rounded-2xl px-3 py-1 font-bold"
+                        : "col-span-1 bg-gray-300 rounded-2xl px-3 py-1 font-bold"
+                    }
+                    onClick={() => changeCategory("accident", 2)}
+                  >
                     Accident
                   </button>
-                  <button className="col-span-1 bg-gray-300 rounded-2xl px-3 py-1 font-bold">
+                  <button
+                    className={
+                      active === 3
+                        ? "col-span-1 bg-gray-600 text-white rounded-2xl px-3 py-1 font-bold"
+                        : "col-span-1 bg-gray-300 rounded-2xl px-3 py-1 font-bold"
+                    }
+                    onClick={() => changeCategory("missing", 3)}
+                  >
                     Missing
                   </button>
-                  <button className="col-span-1 bg-gray-300 rounded-2xl px-3 py-1 font-bold">
+                  <button
+                    className={
+                      active === 4
+                        ? "col-span-1 bg-gray-600 text-white rounded-2xl px-3 py-1 font-bold"
+                        : "col-span-1 bg-gray-300 rounded-2xl px-3 py-1 font-bold"
+                    }
+                    onClick={() => changeCategory("hazard", 4)}
+                  >
                     Hazard
                   </button>
                 </div>
@@ -89,4 +133,6 @@ export default function NewPostModal() {
       ) : null}
     </>
   );
-}
+};
+
+export default NewPostModal;
