@@ -40,7 +40,7 @@ export default class Weather extends Component {
               </div>
               <div className="location">
                 <p className="text-lg font-bold text-white">
-                  Makati, Philippines
+                  Metro Manila, Philippines
                 </p>
               </div>
             </div>
