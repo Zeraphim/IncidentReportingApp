@@ -5,6 +5,8 @@ const NewPostModal = (props) => {
   const [showModal, setShowModal] = React.useState(false);
   const [type, setType] = React.useState("none");
   const [active, setActive] = React.useState(0);
+  const inputFile = React.useRef(null);
+  const [files, setFiles] = React.useState(null);
 
   function changeCategory(string, index) {
     if (index === active) {
@@ -15,6 +17,18 @@ const NewPostModal = (props) => {
       setActive(index);
     }
   }
+
+  function resetComponent() {
+    setShowModal(false);
+    setType("none");
+    setActive(0);
+    setFiles(null);
+  }
+
+  function setSelectedFile(file) {
+    setFiles(file);
+  }
+
   return (
     <>
       <div
@@ -61,7 +75,12 @@ const NewPostModal = (props) => {
                   contentEditable="true"
                   data-text="Tell everyone what's going on."
                 ></p>
-                <PostAuxillary type={type} />
+                <PostAuxillary
+                  type={type}
+                  ref={inputFile}
+                  setSelectedFile={setSelectedFile}
+                  file={files}
+                />
                 <div className="mb-5">
                   <p className="text-xs">Currently posting a report in</p>
                   <p className="text-sm font-bold">
@@ -115,7 +134,7 @@ const NewPostModal = (props) => {
                 <button
                   className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                   type="button"
-                  onClick={() => setShowModal(false)}
+                  onClick={() => resetComponent()}
                 >
                   Discard
                 </button>

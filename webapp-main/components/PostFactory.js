@@ -8,7 +8,7 @@ import { getFirestore } from "firebase/firestore";
 export default class PostFactory extends Component {
   constructor(props) {
     super(props);
-    this.state = { ready: false, loaded: false, posts: {} };
+    this.state = { ready: false, loaded: false, posts: {}, uploading: [] };
   }
 
   componentDidMount() {
@@ -24,6 +24,11 @@ export default class PostFactory extends Component {
   }
 
   render() {
+    function addUploading(post) {
+      const existingUploads = this.state.uploading;
+      const updatedUploads = existingUploads.push(post);
+      this.setState({ uploading: updatedUploads });
+    }
     if (!this.state.ready) {
       return (
         <div className="flex bg-white flex-col mb-3 rounded shadow">
