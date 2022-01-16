@@ -5,6 +5,7 @@ import Navbar from "../components/navbar";
 import NewPostModal from "../components/newPostModal";
 import Weather from "../components/weather";
 
+
 import cookie from "js-cookie";
 
 import { useEffect } from "react";
@@ -23,7 +24,7 @@ import {
 } from "../modules/firebase";
 import PostFactory from "../components/PostFactory";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import Map from "../components/map";
+
 
 
 // Checks if there's a cookie in the browser, if there's none redirect to login page

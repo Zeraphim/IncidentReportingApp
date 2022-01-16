@@ -28,6 +28,10 @@ class MyDocument extends Document {
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/react-datepicker/2.14.1/react-datepicker.min.css"
           />
+          <link
+            href= "https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" 
+            rel= "stylesheet"
+          ></link>
         </Head>
         <body>
           <Main />
