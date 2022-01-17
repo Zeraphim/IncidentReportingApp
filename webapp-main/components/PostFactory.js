@@ -13,9 +13,10 @@ export default class PostFactory extends Component {
 
   componentDidMount() {
     setInterval(() => {
-      if (this.state.loaded) {
+      if (this.state.loaded && !this.state.ready) {
         this.setState({ ready: true });
-      } else {
+      } else if (!this.state.loaded) {
+        console.log("State change");
         retrieve(this.props.user).then((docs) => {
           this.setState({ posts: docs, loaded: true });
         });

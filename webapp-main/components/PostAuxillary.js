@@ -3,6 +3,12 @@ import React, { useRef, useState } from "react";
 const PostAuxillary = (props) => {
   const fileRef = useRef();
   const ctx = <></>;
+  var exports = {
+    setName: props.setName,
+    setDescription: props.setDescription,
+    setLocation: props.setLocation,
+    setReward: props.setReward,
+  };
   const handleChange = (e) => {
     const [file] = e.target.files;
     props.setSelectedFile(file);
@@ -13,6 +19,7 @@ const PostAuxillary = (props) => {
         refProp={fileRef}
         handleChange={handleChange}
         files={props.file}
+        export={exports}
       />
     );
   } else if (props.type == "accident") {
@@ -21,6 +28,7 @@ const PostAuxillary = (props) => {
         refProp={fileRef}
         handleChange={handleChange}
         files={props.file}
+        export={exports}
       />
     );
   } else if (props.type == "missing") {
@@ -29,6 +37,7 @@ const PostAuxillary = (props) => {
         refProp={fileRef}
         handleChange={handleChange}
         files={props.file}
+        export={exports}
       />
     );
   } else if (props.type == "hazard") {
@@ -37,6 +46,7 @@ const PostAuxillary = (props) => {
         refProp={fileRef}
         handleChange={handleChange}
         files={props.file}
+        export={exports}
       />
     );
   } else {
@@ -119,7 +129,11 @@ const CrimePost = (props) => {
 
         <div className="flex flex-col space-y-2">
           <label className="text-sm">Name of suspect(s)</label>
-          <input placeholder="Suspect(s)" className="p-2 rounded"></input>
+          <input
+            placeholder="Suspect(s)"
+            className="p-2 rounded"
+            onChange={(e) => props.export.setName(e.target.value)}
+          ></input>
         </div>
         <div className="flex flex-col space-y-2">
           <label className="text-sm">

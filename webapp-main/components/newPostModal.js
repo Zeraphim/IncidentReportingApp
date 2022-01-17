@@ -7,6 +7,11 @@ const NewPostModal = (props) => {
   const [active, setActive] = React.useState(0);
   const inputFile = React.useRef(null);
   const [files, setFiles] = React.useState(null);
+  const [name, setName] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [location, setLocation] = React.useState("");
+  const [reward, setReward] = React.useState(0);
+  const [caption, setCaption] = React.useState("");
 
   function changeCategory(string, index) {
     if (index === active) {
@@ -25,9 +30,46 @@ const NewPostModal = (props) => {
     setFiles(null);
   }
 
+  function bundleData() {
+    const dataToExport = {
+      user: props.userData,
+      caption: caption,
+      category: type,
+      auxillary: {
+        media: file,
+        name: name,
+        location: location,
+        description: description,
+        reward: reward,
+      },
+    };
+    console.log(dataToExport);
+    alert("Bundled");
+    resetComponent();
+    /*
+    POST JSON FORMAT
+    
+    post {
+      user: User (derived from userData prop. Pass as is.),
+      caption: string,
+      category: "crime"/"accident"/"missing"/"hazard",
+      auxillary: {
+        (This will depend on the category. LEGEND: C - Crime, A - Accident, M - Missing, H - Hazard)
+        (element name: Appears in)
+        name: CM,
+        location: CAMH,
+        description: M,
+        reward: M
+      }
+    }
+    */
+  }
+
   function setSelectedFile(file) {
     setFiles(file);
   }
+
+  function stagePost() {}
 
   return (
     <>
@@ -74,12 +116,17 @@ const NewPostModal = (props) => {
                   className="break-all focus:outline-none display:inline-block mb-2"
                   contentEditable="true"
                   data-text="Tell everyone what's going on."
+                  onChange={(e) => setCaption(e.target.value)}
                 ></p>
                 <PostAuxillary
                   type={type}
                   ref={inputFile}
                   setSelectedFile={setSelectedFile}
                   file={files}
+                  setName={setName}
+                  setDescription={setDescription}
+                  setLocation={setLocation}
+                  setReward={setReward}
                 />
                 <div className="mb-5">
                   <p className="text-xs">Currently posting a report in</p>
@@ -141,7 +188,7 @@ const NewPostModal = (props) => {
                 <button
                   className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-3xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                   type="button"
-                  onClick={() => setShowModal(false)}
+                  onClick={bundleData}
                 >
                   POST
                 </button>
