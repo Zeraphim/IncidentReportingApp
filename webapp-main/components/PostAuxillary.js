@@ -1,11 +1,18 @@
 import React, { useRef, useState } from "react";
 
+import UploadFile from '../pages/api/UploadFile';
+
 const PostAuxillary = (props) => {
   const fileRef = useRef();
   const ctx = <></>;
   const handleChange = (e) => {
     const [file] = e.target.files;
     props.setSelectedFile(file);
+
+    console.log(file.name);
+
+    UploadFile(file);
+    
   };
   if (props.type == "crime") {
     ctx = (

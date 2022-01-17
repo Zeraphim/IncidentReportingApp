@@ -2,41 +2,45 @@ import firebase from 'firebase/app'
 import 'firebase/storage'
 import { useRef, useState } from 'react'
 
-const UploadFile = () => {
-    
-    const inputEl = useRef(null)
-    const [value, setValue] = useState(0)
 
-    function uploadFile() {
-        var file = inputEl.current.files[0]
-        var storageRef = firebase.storage().ref('user_uploads/' + file.name)
-        var task = storageRef.put(file)
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-        task.onChange('state_change', 
+export default function UploadFile (file) {
 
-        function progress(snapshot) {
-            setValue(snapshot.byteTransferred/snapshot.totalBytes*100)
-        },
-
-        function error(err) {
-            alert(error)
-        },
-
-        function complete() {
-            alert('File uploaded to firebase storage successfully!')
+    const storage = getStorage();
+    const storageRef = ref(storage, file.name);
+  
+    const uploadTask = uploadBytesResumable(storageRef, file);
+  
+    // Register three observers:
+    // 1. 'state_changed' observer, called any time the state changes
+    // 2. Error observer, called on failure
+    // 3. Completion observer, called on successful completion
+    uploadTask.on('state_changed', 
+      (snapshot) => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case 'paused':
+            console.log('Upload is paused');
+            break;
+          case 'running':
+            console.log('Upload is running');
+            break;
         }
-        )
-    }
+      }, 
+      (error) => {
+        // Handle unsuccessful uploads
+      }, 
+      () => {
+        // Handle successful uploads on complete
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log('File available at', downloadURL);
+        });
+      }
+    );
 
-    return (
-        <>
-            <progress value={value} max="100"></progress>
-            <input
-                type="file"
-                onChange={uploadFile}
-
-                ref={inputEl}
-            />
-        </>
-    )
 }
