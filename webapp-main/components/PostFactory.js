@@ -1,5 +1,9 @@
 import React, { Component, useEffect, useState } from "react";
-import { firebase } from "../modules/firebase";
+import {
+  firebase,
+  retrieveAndBundlePosts,
+  retrieveUserData,
+} from "../modules/firebase";
 import { collection, doc, setDoc, getDocs } from "firebase/firestore";
 // Initialize Firestore through Firebase
 import { initializeApp } from "firebase/app";
@@ -18,7 +22,9 @@ export default class PostFactory extends Component {
       } else if (!this.state.loaded) {
         console.log("State change");
         retrieve(this.props.user).then((docs) => {
-          this.setState({ posts: docs, loaded: true });
+          PostLoader(docs.docs).then((posts) => {
+            this.setState({ posts: posts, loaded: true });
+          });
         });
       }
     }, 5000);
@@ -56,7 +62,7 @@ export default class PostFactory extends Component {
         </div>
       );
     } else {
-      return PostLoader(this.state.posts);
+      return <>{this.state.posts[0].owner}</>;
     }
   }
 }
@@ -81,7 +87,10 @@ async function retrieve(user) {
   return querySnapshot;
 }
 
-function PostLoader(posts) {
-  console.log(posts.docs[0].data());
-  return <>Post Loader</>;
+async function PostLoader(posts) {
+  const data_list = [];
+  posts.forEach((doc) => data_list.push(doc.data()));
+  console.log(data_list);
+  retrieveAndBundlePosts(data_list).then((data) => console.log(data));
+  return data_list;
 }

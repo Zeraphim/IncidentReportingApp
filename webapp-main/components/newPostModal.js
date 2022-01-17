@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import PostAuxillary from "./PostAuxillary";
+import UploadFile from "../pages/api/UploadFile";
+import PostAuxiliary from "./PostAuxillary";
 
 const NewPostModal = (props) => {
   const [showModal, setShowModal] = React.useState(false);
@@ -35,8 +36,8 @@ const NewPostModal = (props) => {
       user: props.userData,
       caption: caption,
       category: type,
-      auxillary: {
-        media: file,
+      auxiliary: {
+        media: files,
         name: name,
         location: location,
         description: description,
@@ -46,6 +47,7 @@ const NewPostModal = (props) => {
     console.log(dataToExport);
     alert("Bundled");
     resetComponent();
+    UploadFile(dataToExport.auxiliary.media);
     /*
     POST JSON FORMAT
     
@@ -118,7 +120,7 @@ const NewPostModal = (props) => {
                   data-text="Tell everyone what's going on."
                   onChange={(e) => setCaption(e.target.value)}
                 ></p>
-                <PostAuxillary
+                <PostAuxiliary
                   type={type}
                   ref={inputFile}
                   setSelectedFile={setSelectedFile}

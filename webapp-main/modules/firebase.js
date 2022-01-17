@@ -78,3 +78,50 @@ export async function retrieveUserData(uid) {
   const querySnapshot = await getDoc(ref);
   return querySnapshot.data();
 }
+
+async function fetchAux(post) {
+  const db = getFirestore();
+  const data = await getDocs(
+    collection(db, "posts", `location/${post.city_id}/${post.id}/auxiliary`)
+  );
+  return data.docs[0].data();
+}
+
+export async function retrieveAndBundlePosts(posts) {
+  const users = [];
+  const postAux_list = [];
+  const bundledPosts = [];
+  posts.forEach((post) => {
+    const user_data = retrieveUserData(post.owner).then(
+      (user) => (user_data = user)
+    );
+    const post_data = {};
+    fetchAux(post).then((aux) => {
+      post_data = {
+        caption: post.caption,
+        category: post.category,
+        city_id: post.city_id,
+        id: post.id,
+        owner: post.owner,
+        owner_data: {
+          fName: user_data.fName,
+          lName: user_data.lName,
+          points:
+            user_data.points.comment_points + user_data.points.post_points,
+        },
+        auxiliary: {
+          description: aux.description,
+          location: aux.location,
+          media: aux.media,
+          name: aux.name,
+          reward: aux.reward,
+        },
+        upvotes: post.upvotes,
+        downvotes: post.downvotes,
+      };
+      bundledPosts.push(post_data);
+    });
+  });
+
+  return bundledPosts;
+}

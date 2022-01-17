@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 
-import UploadFile from '../pages/api/UploadFile';
+import UploadFile from "../pages/api/UploadFile";
 
-const PostAuxillary = (props) => {
+const PostAuxiliary = (props) => {
   const fileRef = useRef();
   const ctx = <></>;
   var exports = {
@@ -16,9 +16,6 @@ const PostAuxillary = (props) => {
     props.setSelectedFile(file);
 
     console.log(file.name);
-
-    UploadFile(file);
-    
   };
   if (props.type == "crime") {
     ctx = (
@@ -414,4 +411,4 @@ function displaySelected(photo) {
   );
 }
 
-export default PostAuxillary;
+export default PostAuxiliary;
