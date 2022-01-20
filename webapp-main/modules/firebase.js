@@ -30,6 +30,7 @@ const auth = getAuth();
 export function signup(data) {
   const email = data["email"];
   const password = data["password"];
+
   return createUserWithEmailAndPassword(auth, email, password).then((user) => {
     push_signup(user, data);
   });
@@ -63,16 +64,20 @@ async function push_signup(user, data) {
     fName: data.fname,
     lName: data.lname,
     city: data.city,
+    city_id: data.city_id,
     email: data.email,
     points: {
       post_points: 0,
       comment_points: 0,
     },
     posts: {},
+  }).then(() => {
+    window.location.replace("/");
   });
 }
 
 export async function retrieveUserData(uid) {
+  console.log(`Fetching data for ${uid}`);
   const db = getFirestore();
   const ref = doc(db, "users", uid);
   const querySnapshot = await getDoc(ref);

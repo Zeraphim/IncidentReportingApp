@@ -5,7 +5,7 @@ export default class OnboardingNavBar extends Component {
     return (
       <div className="w-full hidden lg:block mb-3 shadow py-3">
         <nav className="flex grid grid-cols-10 gap-x-4 mx-8 xl:mx-16 2xl:mx-64 items-center">
-          <a href="#" className="flex col-span-2 items-center">
+          <a href="../" className="flex col-span-2 items-center">
             <svg
               className="mr-3 h-10"
               viewBox="0 0 52 72"

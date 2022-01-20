@@ -16,6 +16,7 @@ export default function Signup() {
 
   const { control, register, handleSubmit } = useForm();
   const city = 1;
+  const [city_id, setCity_id] = useState(0);
 
   const [email, setEmail] = useState(" ");
 
@@ -37,8 +38,30 @@ export default function Signup() {
 
   const setCity = (value) => {
     city = value;
+    setCity_id(value);
   };
   const upload = (data) => {
+    const options = [
+      { label: "Caloocan", id: "caloocan" },
+      { label: "Malabon", id: "malabon" },
+      { label: "Navotas", id: "navotas" },
+      { label: "Valenzuela", id: "valenzuela" },
+      { label: "Quezon City", id: "qc" },
+      { label: "Marikina", id: "marikina" },
+      { label: "Pasig", id: "pasig" },
+      { label: "Taguig", id: "taguig" },
+      { label: "Makati", id: "makati" },
+      { label: "Manila", id: "manila" },
+      { label: "Mandaluyong", id: "mandaluyong" },
+      { label: "San Juan", id: "sanjuan" },
+      { label: "Pasay", id: "pasay" },
+      { label: "Paranaque", id: "paranaque" },
+      { label: "Las Pinas", id: "laspinas" },
+      { label: "Muntinlupa", id: "muntinlupa" },
+    ];
+    data["city_id"] = options[city_id - 1].id;
+    data["city"] = options[city_id - 1].label;
+    console.log(data);
     handleSignup(data);
   };
   const options = [
@@ -165,7 +188,7 @@ export default function Signup() {
                     <Controller
                       control={control}
                       defaultValue={0}
-                      name="city"
+                      name="city_id"
                       render={({ onChange, value, name, ref }) => (
                         <Select
                           inputRef={ref}

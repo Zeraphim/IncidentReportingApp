@@ -6,7 +6,6 @@ import NewPostModal from "../components/newPostModal";
 import Weather from "../components/weather";
 import { Redirect } from "react-router-dom";
 
-
 import cookie from "js-cookie";
 
 import { useEffect } from "react";
@@ -26,22 +25,16 @@ import {
 import PostFactory from "../components/PostFactory";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-
-
 // Checks if there's a cookie in the browser, if there's none redirect to login page
 function checkSID() {
+  const user = getAuth();
   const router = useRouter();
 
-  console.log(cookie.get("SID"));
-
-  if (cookie.get("SID") === undefined) {
-    console.log("NO SID");
-
-    // Redirect to login after 2 seconds
+  if (user == undefined) {
     useEffect(() => {
       setTimeout(() => {
         router.push("/login");
-      }, 2000);
+      }, 500);
     }, []);
   }
 }
@@ -81,12 +74,12 @@ export default function Home() {
         loadData().then((data) => {
           setUserData(data);
           console.log(userData);
+          setLoading(false);
         });
-        setLoading(false);
       }
       // ...
     } else {
-      <Redirect to="/login" />;
+      window.location.replace("/login");
     }
   });
 

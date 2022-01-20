@@ -104,10 +104,18 @@ async function retrieve(user) {
 
 async function PostLoader(posts) {
   const data_list = [];
-  posts.forEach((doc) => data_list.push(doc.data()));
-  await retrieveAndBundlePosts(data_list).then((data) => {
-    data_list = data;
+  posts.forEach((doc) => {
+    if (doc.id == 0) {
+    } else {
+      const post = doc.data();
+      post.id = doc.id;
+      data_list.push(post);
+    }
   });
+  if (data_list.length > 0)
+    await retrieveAndBundlePosts(data_list).then((data) => {
+      data_list = data;
+    });
   return data_list;
 }
 
