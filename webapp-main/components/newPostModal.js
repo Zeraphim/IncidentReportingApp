@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { uploadPost } from "../modules/firebase";
 import UploadFile from "../pages/api/UploadFile";
 import PostAuxiliary from "./PostAuxillary";
 
@@ -51,9 +52,11 @@ const NewPostModal = (props) => {
       },
     };
     console.log(dataToExport);
-    alert("Bundled");
     resetComponent();
-    UploadFile(dataToExport.auxiliary.media);
+    if (files != null) {
+      UploadFile(files);
+    }
+
     /*
     POST JSON FORMAT
     

@@ -9,8 +9,16 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { collection, doc, setDoc, getDocs, getDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  setDoc,
+  getDocs,
+  getDoc,
+  document,
+  addDoc,
+  getFirestore,
+} from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -90,6 +98,30 @@ async function fetchAux(post) {
     collection(db, "posts", `location/${post.city_id}/${post.id}/auxiliary`)
   );
   return data.docs[0].data();
+}
+
+export async function uploadPost(post, user) {
+  const db = getFirestore();
+  const ref = doc(collection(db, `posts/location/${user.city_id}/`));
+  const data = await setDoc(ref, {
+    caption: post.caption,
+    category: post.category,
+    city_id: user.city_id,
+    owner: user.id,
+    downvotes: 0,
+    upvotes: 0,
+  });
+  const auxRef = doc(
+    collection(db, "posts", `location/${user.city_id}/${ref.id}/auxiliary`)
+  );
+  console.log(`location/${user.city_id}/${ref.id}/auxiliary`);
+  const aux = await setDoc(auxRef, {
+    description: post.auxiliary.description,
+    location: post.auxiliary.location,
+    media: post.auxiliary.media,
+    name: post.auxiliary.name,
+    reward: post.auxiliary.reward,
+  });
 }
 
 export async function retrieveAndBundlePosts(posts) {

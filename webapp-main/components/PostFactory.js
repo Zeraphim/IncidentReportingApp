@@ -74,6 +74,8 @@ export default class PostFactory extends Component {
             >
               here
             </a>
+            . Otherwise, you can try to reload the page to check if any new
+            posts have been made.
           </div>
         );
       }
