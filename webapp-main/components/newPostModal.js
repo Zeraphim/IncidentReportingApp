@@ -22,6 +22,12 @@ const NewPostModal = (props) => {
       setType(string);
       setActive(index);
     }
+    setFiles(null);
+    setName("");
+    setDescription("");
+    setLocation("");
+    setReward("");
+    setCaption("");
   }
 
   function resetComponent() {
@@ -100,7 +106,9 @@ const NewPostModal = (props) => {
           />
         </svg>
 
-        <a className="text-gray-500 text-lg">What's going on?</a>
+        <a className="text-gray-500 text-lg">
+          What's going on, {props.user.fName}?
+        </a>
       </div>
       {showModal ? (
         <>
