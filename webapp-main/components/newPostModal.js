@@ -39,8 +39,9 @@ const NewPostModal = (props) => {
   }
 
   function bundleData() {
+    console.log(props);
     const dataToExport = {
-      user: props.userData,
+      user: props.user,
       caption: caption,
       category: type,
       auxiliary: {
@@ -53,8 +54,9 @@ const NewPostModal = (props) => {
     };
     console.log(dataToExport);
     resetComponent();
+    uploadPost(dataToExport, props.user);
     if (files != null) {
-      UploadFile(files);
+      /*handle upload here UploadFile(files);*/
     }
 
     /*
