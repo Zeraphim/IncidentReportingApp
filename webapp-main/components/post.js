@@ -1,11 +1,14 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
+import { retrieveUserData } from "../modules/firebase";
 import { getFile } from "../pages/api/UploadFile";
+import Image from "next/image";
 
 export default class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      comments: false,
+      commentsModal: false,
+      comments: [],
       points: this.props.post.upvotes - this.props.post.downvotes,
       previous_point: this.props.post.upvotes - this.props.post.downvotes,
     };
@@ -87,34 +90,143 @@ export default class Post extends Component {
               Downvote
             </button>
           )}
-          {this.state.comments ? (
+          {this.state.commentsModal ? (
             <button
               className="col-span-1 py-4 font-bold bg-gray-700 text-white transition-all hover:bg-gray-300 hover:text-black duration-500"
-              onClick={() => this.setState({ comments: false })}
+              onClick={() => this.setState({ commentsModal: false })}
             >
               Comment
             </button>
           ) : (
             <button
               className="col-span-1 py-4 font-bold hover:text-white transition-all hover:bg-gray-700 duration-500 hover:rounded-r-lg hover:rounded-b-lg hover:rounded-t-none hover:rounded-l-none"
-              onClick={() => this.setState({ comments: true })}
+              onClick={() => this.setState({ commentsModal: true })}
             >
-              Comment
+              <div className="flex flex-row justify-center">
+                Comment{" "}
+                {this.state.comments.length > 0 ? (
+                  <p className="ml-2 px-2 py-1 rounded-full text-xs bg-white text-black hover:bg-gray-900 hover:text-white">
+                    {this.state.comments.length}
+                  </p>
+                ) : (
+                  <></>
+                )}
+              </div>
             </button>
           )}
         </div>
-        {this.state.comments ? <Comments /> : <></>}
+        {this.state.commentsModal ? (
+          <div className="flex flex-col">
+            <Comments />{" "}
+            <div className="p-3 text-sm">
+              <input
+                className="p-2 rounded-lg w-full"
+                placeholder="Write a comment"
+              />
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     );
   }
 }
 
 const Comments = (props) => {
-  return (
-    <div className="p-3 text-sm">
-      <input className="p-2 rounded-lg w-full" placeholder="Write a comment" />
-    </div>
-  );
+  const [components, setComponents] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+  const commentData = [
+    //switch to props.commentData later.
+    {
+      uid: "DOfWJIeU3ehOOtSodzdIEh5Hdqd2",
+      message:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mollis, ante nec congue imperdiet, ipsum lorem scelerisque arcu, sed finibus mi purus vitae est. Praesent non diam cursus, euismod velit et, imperdiet mauris. Aliquam id augue ut sapien pellentesque tempus. Maecenas gravida, arcu ut pulvinar pretium, eros neque tristique metus, vel ornare ex urna faucibus mi. ",
+      upvotes: 0,
+      downvotes: 0,
+    },
+    {
+      uid: "Lq4MC8XxEoe5NLWJPrtsYSisSVA3",
+      message:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mollis, ante nec congue imperdiet, ipsum lorem scelerisque arcu, sed finibus mi purus vitae est. Praesent non diam cursus, euismod velit et, imperdiet mauris. Aliquam id augue ut sapien pellentesque tempus. Maecenas gravida, arcu ut pulvinar pretium, eros neque tristique metus, vel ornare ex urna faucibus mi. ",
+      upvotes: 0,
+      downvotes: 0,
+    },
+    {
+      uid: "u2PXpMxQQLhXf8rjxTDTw6gx0R12",
+      message:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mollis, ante nec congue imperdiet, ipsum lorem scelerisque arcu, sed finibus mi purus vitae est. Praesent non diam cursus, euismod velit et, imperdiet mauris. Aliquam id augue ut sapien pellentesque tempus. Maecenas gravida, arcu ut pulvinar pretium, eros neque tristique metus, vel ornare ex urna faucibus mi. ",
+      upvotes: 0,
+      downvotes: 0,
+    },
+  ]; //Sample format
+  if (!loaded) {
+    if (commentData.length > 0) {
+      const commentComponents = [];
+      commentData.forEach((comment) => {
+        commentComponents.push(<Comment data={comment} />);
+      });
+      setComponents(commentComponents);
+      setLoaded(true);
+      return <></>;
+    } else return <></>;
+  } else return <>{components}</>;
+};
+
+const Comment = (props) => {
+  const [user, setUser] = useState(null);
+  const [points, setPoints] = useState(0);
+  console.log(props.data);
+  useEffect(() => {
+    setTimeout(() => {
+      retrieveUserData(props.data.uid).then((userdata) => {
+        setUser(userdata);
+      });
+    }, 500);
+  }, []);
+
+  if (user != null) {
+    return (
+      <>
+        <div className="flex flex-row p-3 hover:bg-gray-300 transition-all duration-500">
+          <div className="flex-none">
+            {user.picture == undefined ? (
+              <Image
+                src={"/Profile.svg"}
+                width={30}
+                height={30}
+                className="rounded-full bg-gray-300"
+              />
+            ) : (
+              <Image
+                src={user.picture}
+                width={25}
+                height={25}
+                className="rounded-full bg-gray-300"
+              />
+            )}
+          </div>
+          <div>
+            <div className="p-2 ml-2 text-sm bg-white rounded-lg">
+              <div className="mr-2 font-bold text-xs">{`${user.fName} ${user.lName}`}</div>{" "}
+              <p>{props.data.message}</p>
+            </div>
+            <div className="flex flex-row space-x-3 pt-1 pl-3">
+              {points >= 0 ? (
+                <p className="text-green-600 font-bold font-number">{points}</p>
+              ) : (
+                <p className="text-red-400 font-bold font-number">{points}</p>
+              )}
+              <button className="text-xs hover:font-bold">Upvote</button>
+              <button className="text-xs hover:font-bold">Downvote</button>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  } else {
+    return <></>;
+  }
 };
 
 function postPoints(points) {
@@ -162,7 +274,7 @@ function determineType(points) {
     return <small>USER</small>;
   } else if (points >= 100) {
     return <small>VERIFIED</small>;
-  } else if (user_type < -1) {
+  } else if (points < -1) {
     return <small>UNRELIABLE</small>;
   }
 }
