@@ -8,7 +8,30 @@ export default class Post extends Component {
     super(props);
     this.state = {
       commentsModal: false,
-      comments: [],
+      comments: [
+        //switch to props.commentData later.
+        {
+          uid: "DOfWJIeU3ehOOtSodzdIEh5Hdqd2",
+          message:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mollis, ante nec congue imperdiet, ipsum lorem scelerisque arcu, sed finibus mi purus vitae est. Praesent non diam cursus, euismod velit et, imperdiet mauris. Aliquam id augue ut sapien pellentesque tempus. Maecenas gravida, arcu ut pulvinar pretium, eros neque tristique metus, vel ornare ex urna faucibus mi. ",
+          upvotes: 0,
+          downvotes: 0,
+        },
+        {
+          uid: "Lq4MC8XxEoe5NLWJPrtsYSisSVA3",
+          message:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mollis, ante nec congue imperdiet, ipsum lorem scelerisque arcu, sed finibus mi purus vitae est. Praesent non diam cursus, euismod velit et, imperdiet mauris. Aliquam id augue ut sapien pellentesque tempus. Maecenas gravida, arcu ut pulvinar pretium, eros neque tristique metus, vel ornare ex urna faucibus mi. ",
+          upvotes: 0,
+          downvotes: 0,
+        },
+        {
+          uid: "u2PXpMxQQLhXf8rjxTDTw6gx0R12",
+          message:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mollis, ante nec congue imperdiet, ipsum lorem scelerisque arcu, sed finibus mi purus vitae est. Praesent non diam cursus, euismod velit et, imperdiet mauris. Aliquam id augue ut sapien pellentesque tempus. Maecenas gravida, arcu ut pulvinar pretium, eros neque tristique metus, vel ornare ex urna faucibus mi. ",
+          upvotes: 0,
+          downvotes: 0,
+        },
+      ],
       points: this.props.post.upvotes - this.props.post.downvotes,
       previous_point: this.props.post.upvotes - this.props.post.downvotes,
     };
@@ -117,7 +140,7 @@ export default class Post extends Component {
         </div>
         {this.state.commentsModal ? (
           <div className="flex flex-col">
-            <Comments />{" "}
+            <Comments commentData={this.state.comments} />{" "}
             <div className="p-3 text-sm">
               <input
                 className="p-2 rounded-lg w-full"
@@ -136,30 +159,7 @@ export default class Post extends Component {
 const Comments = (props) => {
   const [components, setComponents] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const commentData = [
-    //switch to props.commentData later.
-    {
-      uid: "DOfWJIeU3ehOOtSodzdIEh5Hdqd2",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mollis, ante nec congue imperdiet, ipsum lorem scelerisque arcu, sed finibus mi purus vitae est. Praesent non diam cursus, euismod velit et, imperdiet mauris. Aliquam id augue ut sapien pellentesque tempus. Maecenas gravida, arcu ut pulvinar pretium, eros neque tristique metus, vel ornare ex urna faucibus mi. ",
-      upvotes: 0,
-      downvotes: 0,
-    },
-    {
-      uid: "Lq4MC8XxEoe5NLWJPrtsYSisSVA3",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mollis, ante nec congue imperdiet, ipsum lorem scelerisque arcu, sed finibus mi purus vitae est. Praesent non diam cursus, euismod velit et, imperdiet mauris. Aliquam id augue ut sapien pellentesque tempus. Maecenas gravida, arcu ut pulvinar pretium, eros neque tristique metus, vel ornare ex urna faucibus mi. ",
-      upvotes: 0,
-      downvotes: 0,
-    },
-    {
-      uid: "u2PXpMxQQLhXf8rjxTDTw6gx0R12",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mollis, ante nec congue imperdiet, ipsum lorem scelerisque arcu, sed finibus mi purus vitae est. Praesent non diam cursus, euismod velit et, imperdiet mauris. Aliquam id augue ut sapien pellentesque tempus. Maecenas gravida, arcu ut pulvinar pretium, eros neque tristique metus, vel ornare ex urna faucibus mi. ",
-      upvotes: 0,
-      downvotes: 0,
-    },
-  ]; //Sample format
+  const commentData = props.commentData; //Sample format
   if (!loaded) {
     if (commentData.length > 0) {
       const commentComponents = [];
