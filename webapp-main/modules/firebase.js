@@ -19,6 +19,7 @@ import {
   addDoc,
   getFirestore,
 } from "firebase/firestore";
+import UploadFile from "../pages/api/UploadFile";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -100,10 +101,11 @@ async function fetchAux(post) {
   return data.docs[0].data();
 }
 
-export async function uploadPost(post, user) {
+export async function uploadPost(post, user, file) {
   const db = getFirestore();
   const ref = doc(collection(db, `posts/location/${user.city_id}/`));
   const data = await setDoc(ref, {
+    id: ref.id,
     caption: post.caption,
     category: post.category,
     city_id: user.city_id,
@@ -122,6 +124,9 @@ export async function uploadPost(post, user) {
     name: post.auxiliary.name,
     reward: post.auxiliary.reward,
   });
+  if (file != undefined) {
+    UploadFile(file, `${ref.id}/${file.name}`);
+  }
 }
 
 export async function retrieveAndBundlePosts(posts) {

@@ -1,9 +1,18 @@
 import React, { Component } from "react";
+import { getFile } from "../pages/api/UploadFile";
 
 export default class Post extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      comments: false,
+      points: this.props.post.upvotes - this.props.post.downvotes,
+      previous_point: this.props.post.upvotes - this.props.post.downvotes,
+    };
+  }
   render() {
     return (
-      <div className="flex bg-white flex-col mb-3 rounded-lg shadow">
+      <div className="flex bg-gray-100 flex-col mb-3 rounded-lg shadow">
         <div className="h-1/6 flex flex-row relative">
           <div className="p-3 flex flex-row items-center">
             <div className="mr-3 grid flex-none">Hi</div>
@@ -18,26 +27,95 @@ export default class Post extends Component {
               </p>
             </div>
           </div>
-          {postPoints(this.props.post.upvotes - this.props.post.downvotes)}
+          {postPoints(this.state.points)}
         </div>
         <div className="h-4/6">
           <Content data={this.props.post} />
         </div>
         <div className="h-1/6 grid grid-cols-3 bg-gray-300 rounded-b-lg">
-          <button className="col-span-1 py-4 font-bold hover:text-white">
-            Upvote
-          </button>
-          <button className="col-span-1 py-4 font-bold hover:text-white">
-            Downvote
-          </button>
-          <button className="col-span-1 py-4 font-bold hover:text-white">
-            Comment
-          </button>
+          {this.state.upvote ? (
+            <button
+              className="col-span-1 py-4 font-bold bg-green-600 text-white transition-all hover:bg-gray-300 hover:text-black duration-500 rounded-bl-lg"
+              onClick={() =>
+                this.setState({
+                  upvote: false,
+                  points: this.state.previous_point,
+                })
+              }
+            >
+              Upvote
+            </button>
+          ) : (
+            <button
+              className="col-span-1 py-4 font-bold hover:text-white transition-all hover:bg-green-600 duration-500 hover:rounded-bl-lg"
+              onClick={() =>
+                this.setState({
+                  upvote: true,
+                  downvote: false,
+                  previous_point: this.state.points,
+                  points: this.state.points + 1,
+                })
+              }
+            >
+              Upvote
+            </button>
+          )}
+          {this.state.downvote ? (
+            <button
+              className="col-span-1 py-4 font-bold bg-red-600 text-white transition-all hover:bg-gray-300 hover:text-black duration-500"
+              onClick={() =>
+                this.setState({
+                  downvote: false,
+                  points: this.state.previous_point,
+                })
+              }
+            >
+              Downvote
+            </button>
+          ) : (
+            <button
+              className="col-span-1 py-4 font-bold hover:text-white transition-all hover:bg-red-600 duration-500"
+              onClick={() =>
+                this.setState({
+                  downvote: true,
+                  upvote: false,
+                  previous_point: this.state.points,
+                  points: this.state.points - 1,
+                })
+              }
+            >
+              Downvote
+            </button>
+          )}
+          {this.state.comments ? (
+            <button
+              className="col-span-1 py-4 font-bold bg-gray-700 text-white transition-all hover:bg-gray-300 hover:text-black duration-500"
+              onClick={() => this.setState({ comments: false })}
+            >
+              Comment
+            </button>
+          ) : (
+            <button
+              className="col-span-1 py-4 font-bold hover:text-white transition-all hover:bg-gray-700 duration-500 hover:rounded-r-lg hover:rounded-b-lg hover:rounded-t-none hover:rounded-l-none"
+              onClick={() => this.setState({ comments: true })}
+            >
+              Comment
+            </button>
+          )}
         </div>
+        {this.state.comments ? <Comments /> : <></>}
       </div>
     );
   }
 }
+
+const Comments = (props) => {
+  return (
+    <div className="p-3 text-sm">
+      <input className="p-2 rounded-lg w-full" placeholder="Write a comment" />
+    </div>
+  );
+};
 
 function postPoints(points) {
   if (points >= 0)
@@ -118,6 +196,7 @@ const Auxiliary = (props) => {
   if (props.post.category == "crime") {
     return (
       <div className="p-3 rounded shadow flex flex-col space-y-none bg-red-600 text-white">
+        {data.media != null ? <DisplayMedia data={props.post} /> : <></>}
         <p>
           Name of suspect(s): <b>{data.name}</b>
         </p>
@@ -129,6 +208,7 @@ const Auxiliary = (props) => {
   } else if (props.post.category == "accident") {
     return (
       <div className="p-3 rounded shadow flex flex-col space-y-none bg-yellow-600 text-white">
+        {data.media != null ? <DisplayMedia data={props.post} /> : <></>}
         <p>
           Location of accident: <b>{data.location}</b>
         </p>
@@ -137,6 +217,7 @@ const Auxiliary = (props) => {
   } else if (props.post.category == "missing") {
     return (
       <div className="p-3 rounded shadow flex flex-col space-y-none bg-yellow-300 text-white">
+        {data.media != null ? <DisplayMedia data={props.post} /> : <></>}
         <p>
           Name of missing person(s): <b>{data.name}</b>
         </p>
@@ -148,6 +229,7 @@ const Auxiliary = (props) => {
   } else if (props.post.category == "hazard") {
     return (
       <div className="p-3 rounded shadow flex flex-col space-y-none bg-orange-600 text-white">
+        {data.media != null ? <DisplayMedia data={props.post} /> : <></>}
         <p>
           Location of hazard: <b>{data.location}</b>
         </p>
@@ -155,4 +237,30 @@ const Auxiliary = (props) => {
     );
   }
   return <>{data.location}</>;
+};
+
+const DisplayMedia = (props) => {
+  const result = <></>;
+  if (props.data.auxiliary.media.indexOf("png") > -1) {
+    result = (
+      <div
+        className="mb-3 bg-gray-600 rounded flex"
+        style={{
+          minHeight: "250px",
+          minHeight: "250px",
+        }}
+      >
+        <img
+          id={props.data.id}
+          style={{
+            maxWidth: "630px",
+            maxHeight: "1200px",
+          }}
+          className="rounded m-auto"
+        />
+      </div>
+    );
+    getFile(props.data);
+  }
+  return result;
 };

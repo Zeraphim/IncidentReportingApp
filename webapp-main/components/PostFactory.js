@@ -40,7 +40,7 @@ export default class PostFactory extends Component {
     if (!this.state.ready) {
       return (
         <div className="flex bg-white flex-col mb-3 rounded shadow mt-3">
-          <div className="h-1/6 grid grid-cols-2">
+          <div className="h-1/6 grid grid-cols-2 animate-pulse">
             <div className="col-span-1 pl-3 pt-3 flex flex-row items-center">
               <div className="mr-3">
                 <svg height="50" width="50">
@@ -127,5 +127,9 @@ const PostRenderer = (props) => {
   posts.forEach((post) => {
     post_components.push(<Post post={post} />);
   });
-  return <div className="flex flex-col space-y-2 mt-3">{post_components}</div>;
+  return (
+    <div className="flex flex-col mt-5">
+      <div className="space-y-5">{post_components}</div>
+    </div>
+  );
 };

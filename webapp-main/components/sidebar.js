@@ -13,7 +13,7 @@ export default class Sidebar extends Component {
               </Link>
             </li>
             <li>
-              <Link href="/map">
+              <Link href="/maps">
                 <a>Live Map</a>
               </Link>
             </li>

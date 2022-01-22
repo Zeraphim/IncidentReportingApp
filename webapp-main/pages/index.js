@@ -122,11 +122,11 @@ export default function Home() {
           <div className="col-span-2  h-screen hidden lg:block">
             <Sidebar user={userData} />
           </div>
-          <div className=" h-screen col-span-10 lg:col-span-5 overflow-auto">
+          <div className=" h-screen col-span-10 lg:col-span-5 overflow-auto no-scrollbar">
             <NewPostModal user={userData} />
             <PostFactory user={userData} />
           </div>
-          <div className="col-span-3  h-screen hidden lg:block">
+          <div className="col-span-3 h-screen hidden lg:block">
             <Reputation user={userData} />
           </div>
         </div>

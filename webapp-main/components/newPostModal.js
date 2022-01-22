@@ -42,10 +42,10 @@ const NewPostModal = (props) => {
     console.log(props);
     const dataToExport = {
       user: props.user,
-      caption: caption,
+      caption: document.getElementById("caption-editable-div").innerText,
       category: type,
       auxiliary: {
-        media: files,
+        media: null,
         name: name,
         location: location,
         description: description,
@@ -54,11 +54,11 @@ const NewPostModal = (props) => {
     };
     console.log(dataToExport);
     resetComponent();
-    uploadPost(dataToExport, props.user);
-    if (files != null) {
-      /*handle upload here UploadFile(files);*/
-    }
 
+    if (files != null) {
+      dataToExport.auxiliary.media = files.name;
+    }
+    uploadPost(dataToExport, props.user, files);
     /*
     POST JSON FORMAT
     
@@ -81,8 +81,6 @@ const NewPostModal = (props) => {
   function setSelectedFile(file) {
     setFiles(file);
   }
-
-  function stagePost() {}
 
   return (
     <>
@@ -131,7 +129,7 @@ const NewPostModal = (props) => {
                   className="break-all focus:outline-none display:inline-block mb-2"
                   contentEditable="true"
                   data-text="Tell everyone what's going on."
-                  onChange={(e) => setCaption(e.target.value)}
+                  id="caption-editable-div"
                 ></p>
                 <PostAuxiliary
                   type={type}
