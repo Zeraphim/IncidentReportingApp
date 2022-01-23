@@ -101,6 +101,18 @@ async function fetchAux(post) {
   return data.docs[0].data();
 }
 
+async function fetchComments(post) {
+  const exported = [];
+  const db = getFirestore();
+  const data = await getDocs(
+    collection(db, "posts", `location/${post.city_id}/${post.id}/comments`)
+  );
+  data.forEach((comment) => {
+    exported.push(comment.data());
+  });
+  return exported;
+}
+
 export async function uploadPost(post, user, file) {
   const db = getFirestore();
   const ref = doc(collection(db, `posts/location/${user.city_id}/`));
@@ -138,30 +150,37 @@ export async function retrieveAndBundlePosts(posts) {
       (user) => (user_data = user)
     );
     const post_data = {};
+    const aux_data = {};
+    const commentData = {};
     fetchAux(post).then((aux) => {
-      post_data = {
-        caption: post.caption,
-        category: post.category,
-        city_id: post.city_id,
-        id: post.id,
-        owner: post.owner,
-        owner_data: {
-          fName: user_data.fName,
-          lName: user_data.lName,
-          points:
-            user_data.points.comment_points + user_data.points.post_points,
-        },
-        auxiliary: {
-          description: aux.description,
-          location: aux.location,
-          media: aux.media,
-          name: aux.name,
-          reward: aux.reward,
-        },
-        upvotes: post.upvotes,
-        downvotes: post.downvotes,
+      aux_data = {
+        description: aux.description,
+        location: aux.location,
+        media: aux.media,
+        name: aux.name,
+        reward: aux.reward,
       };
-      bundledPosts.push(post_data);
+      fetchComments(post).then((comments) => {
+        commentData = comments;
+        post_data = {
+          caption: post.caption,
+          category: post.category,
+          city_id: post.city_id,
+          id: post.id,
+          owner: post.owner,
+          owner_data: {
+            fName: user_data.fName,
+            lName: user_data.lName,
+            points:
+              user_data.points.comment_points + user_data.points.post_points,
+          },
+          auxiliary: aux_data,
+          comments: commentData,
+          upvotes: post.upvotes,
+          downvotes: post.downvotes,
+        };
+        bundledPosts.push(post_data);
+      });
     });
   });
 

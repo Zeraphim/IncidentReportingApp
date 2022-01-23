@@ -8,30 +8,7 @@ export default class Post extends Component {
     super(props);
     this.state = {
       commentsModal: false,
-      comments: [
-        //switch to props.commentData later.
-        {
-          uid: "DOfWJIeU3ehOOtSodzdIEh5Hdqd2",
-          message:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mollis, ante nec congue imperdiet, ipsum lorem scelerisque arcu, sed finibus mi purus vitae est. Praesent non diam cursus, euismod velit et, imperdiet mauris. Aliquam id augue ut sapien pellentesque tempus. Maecenas gravida, arcu ut pulvinar pretium, eros neque tristique metus, vel ornare ex urna faucibus mi. ",
-          upvotes: 0,
-          downvotes: 0,
-        },
-        {
-          uid: "Lq4MC8XxEoe5NLWJPrtsYSisSVA3",
-          message:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mollis, ante nec congue imperdiet, ipsum lorem scelerisque arcu, sed finibus mi purus vitae est. Praesent non diam cursus, euismod velit et, imperdiet mauris. Aliquam id augue ut sapien pellentesque tempus. Maecenas gravida, arcu ut pulvinar pretium, eros neque tristique metus, vel ornare ex urna faucibus mi. ",
-          upvotes: 0,
-          downvotes: 0,
-        },
-        {
-          uid: "u2PXpMxQQLhXf8rjxTDTw6gx0R12",
-          message:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mollis, ante nec congue imperdiet, ipsum lorem scelerisque arcu, sed finibus mi purus vitae est. Praesent non diam cursus, euismod velit et, imperdiet mauris. Aliquam id augue ut sapien pellentesque tempus. Maecenas gravida, arcu ut pulvinar pretium, eros neque tristique metus, vel ornare ex urna faucibus mi. ",
-          upvotes: 0,
-          downvotes: 0,
-        },
-      ],
+      comments: this.props.post.comments,
       points: this.props.post.upvotes - this.props.post.downvotes,
       previous_point: this.props.post.upvotes - this.props.post.downvotes,
     };
@@ -367,6 +344,8 @@ const DisplayMedia = (props) => {
           style={{
             maxWidth: "630px",
             maxHeight: "1200px",
+            objectFit: "cover",
+            overflow: "hidden",
           }}
           className="rounded m-auto"
         />
