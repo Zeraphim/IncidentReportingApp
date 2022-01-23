@@ -8,11 +8,12 @@ import { collection, doc, setDoc, getDocs } from "firebase/firestore";
 // Initialize Firestore through Firebase
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import Post from "../components/post";
 
 export default class PostFactory extends Component {
   constructor(props) {
     super(props);
-    this.state = { ready: false, loaded: false, posts: {}, uploading: [] };
+    this.state = { ready: false, loaded: false, posts: [], uploading: [] };
   }
 
   componentDidMount() {
@@ -27,7 +28,7 @@ export default class PostFactory extends Component {
           });
         });
       }
-    }, 5000);
+    }, 2000);
   }
 
   render() {
@@ -38,8 +39,8 @@ export default class PostFactory extends Component {
     }
     if (!this.state.ready) {
       return (
-        <div className="flex bg-white flex-col mb-3 rounded shadow">
-          <div className="h-1/6 grid grid-cols-2">
+        <div className="flex bg-white flex-col mb-3 rounded shadow mt-3">
+          <div className="h-1/6 grid grid-cols-2 animate-pulse">
             <div className="col-span-1 pl-3 pt-3 flex flex-row items-center">
               <div className="mr-3">
                 <svg height="50" width="50">
@@ -62,7 +63,23 @@ export default class PostFactory extends Component {
         </div>
       );
     } else {
-      return <>{this.state.posts[0].owner}</>;
+      if (this.state.posts.length == 0) {
+        return (
+          <div className="text-gray-400 text-md p-3">
+            Seems like there are no reports in your location yet. If you've set
+            the wrong location, you can change it{" "}
+            <a
+              href="/settings/location"
+              className="text-gray-600 hover:text-black"
+            >
+              here
+            </a>
+            . Otherwise, you can try to reload the page to check if any new
+            posts have been made.
+          </div>
+        );
+      }
+      return <PostRenderer posts={this.state.posts} />;
     }
   }
 }
@@ -89,8 +106,30 @@ async function retrieve(user) {
 
 async function PostLoader(posts) {
   const data_list = [];
-  posts.forEach((doc) => data_list.push(doc.data()));
-  console.log(data_list);
-  retrieveAndBundlePosts(data_list).then((data) => console.log(data));
+  posts.forEach((doc) => {
+    if (doc.id == 0) {
+    } else {
+      const post = doc.data();
+      post.id = doc.id;
+      data_list.push(post);
+    }
+  });
+  if (data_list.length > 0)
+    await retrieveAndBundlePosts(data_list).then((data) => {
+      data_list = data;
+    });
   return data_list;
 }
+
+const PostRenderer = (props) => {
+  const posts = props.posts;
+  const post_components = [];
+  posts.forEach((post) => {
+    post_components.push(<Post post={post} />);
+  });
+  return (
+    <div className="flex flex-col mt-5">
+      <div className="space-y-5">{post_components}</div>
+    </div>
+  );
+};

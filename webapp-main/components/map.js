@@ -1,5 +1,6 @@
 import React,{ useState} from "react";
-import ReactMapGL from "react-map-gl";
+import ReactMapGL, {Marker} from "react-map-gl";
+
 
 export default function Map(){
 
@@ -18,7 +19,9 @@ export default function Map(){
         mapStyle={'mapbox://styles/mapbox/dark-v9'}
         mapboxApiAccessToken={"pk.eyJ1Ijoia3JtaW5hbnRvbmlvIiwiYSI6ImNreWZueWJ6czBuYzEyb3RlMzR3NGMxd2oifQ.qwqMbOESi_4IlFi_hZhI0Q"}
         {...viewport} 
-        onViewportChange={(newView) => setViewport(newView)}> 
+        onViewportChange={viewport => {setViewport(viewport)
+        
+        }}> 
         </ReactMapGL>
     );
 }

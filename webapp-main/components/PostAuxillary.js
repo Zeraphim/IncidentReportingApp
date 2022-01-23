@@ -143,7 +143,11 @@ const CrimePost = (props) => {
           <label className="text-sm">
             Location last seen (Place, landmarks, etc.)
           </label>
-          <input placeholder="input" className="p-2 rounded"></input>
+          <input
+            placeholder="Location"
+            className="p-2 rounded"
+            onChange={(e) => props.export.setLocation(e.target.value)}
+          ></input>
         </div>
         <label className="text-xs font-light text-gray-400">
           All fields are optional.
@@ -198,6 +202,7 @@ const AccidentPost = (props) => {
           <input
             placeholder="If the address is unknown, provide a description."
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            onChange={(e) => props.export.setLocation(e.target.value)}
           ></input>
         </div>
         <label className="text-xs font-light text-gray-400">
@@ -270,7 +275,11 @@ const MissingPost = (props) => {
         )}
         <div className="flex flex-col space-y-2">
           <label className="text-sm">Name of missing person(s)</label>
-          <input placeholder="Name(s)" className="p-2 rounded"></input>
+          <input
+            placeholder="Name(s)"
+            className="p-2 rounded"
+            onChange={(e) => props.export.setName(e.target.value)}
+          ></input>
         </div>
         <div className="flex flex-col space-y-2">
           <label className="text-sm">
@@ -279,6 +288,7 @@ const MissingPost = (props) => {
           <input
             placeholder="If the location is unknown, provide a description."
             className="p-2 rounded"
+            onChange={(e) => props.export.setLocation(e.target.value)}
           ></input>
         </div>
         <div className="flex flex-col space-y-2">
@@ -286,6 +296,7 @@ const MissingPost = (props) => {
           <textarea
             placeholder="Provide a description of the missing individual(s) (ie. Clothes, appearance)"
             className="p-2 rounded text-sm"
+            onChange={(e) => props.export.setDescription(e.target.value)}
           ></textarea>
         </div>
         <div className="flex flex-col space-y-2 text-sm">
@@ -294,6 +305,7 @@ const MissingPost = (props) => {
             type="number"
             className="p-2 rounded"
             placeholder="Leave empty if none"
+            onChange={(e) => props.export.setReward(e.target.value)}
           ></input>
         </div>
         <label className="text-xs font-light text-gray-400">
@@ -347,6 +359,7 @@ const HazardPost = (props) => {
           <input
             placeholder="If the location is unknown, provide a description."
             className="p-2 rounded"
+            onChange={(e) => props.export.setLocation(e.target.value)}
           ></input>
         </div>
         <label className="text-xs font-light text-gray-400">

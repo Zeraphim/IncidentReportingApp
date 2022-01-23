@@ -9,8 +9,17 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { collection, doc, setDoc, getDocs, getDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  setDoc,
+  getDocs,
+  getDoc,
+  document,
+  addDoc,
+  getFirestore,
+} from "firebase/firestore";
+import UploadFile from "../pages/api/UploadFile";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -30,6 +39,7 @@ const auth = getAuth();
 export function signup(data) {
   const email = data["email"];
   const password = data["password"];
+
   return createUserWithEmailAndPassword(auth, email, password).then((user) => {
     push_signup(user, data);
   });
@@ -63,16 +73,20 @@ async function push_signup(user, data) {
     fName: data.fname,
     lName: data.lname,
     city: data.city,
+    city_id: data.city_id,
     email: data.email,
     points: {
       post_points: 0,
       comment_points: 0,
     },
     posts: {},
+  }).then(() => {
+    window.location.replace("/");
   });
 }
 
 export async function retrieveUserData(uid) {
+  console.log(`Fetching data for ${uid}`);
   const db = getFirestore();
   const ref = doc(db, "users", uid);
   const querySnapshot = await getDoc(ref);
@@ -85,6 +99,34 @@ async function fetchAux(post) {
     collection(db, "posts", `location/${post.city_id}/${post.id}/auxiliary`)
   );
   return data.docs[0].data();
+}
+
+export async function uploadPost(post, user, file) {
+  const db = getFirestore();
+  const ref = doc(collection(db, `posts/location/${user.city_id}/`));
+  const data = await setDoc(ref, {
+    id: ref.id,
+    caption: post.caption,
+    category: post.category,
+    city_id: user.city_id,
+    owner: user.id,
+    downvotes: 0,
+    upvotes: 0,
+  });
+  const auxRef = doc(
+    collection(db, "posts", `location/${user.city_id}/${ref.id}/auxiliary`)
+  );
+  console.log(`location/${user.city_id}/${ref.id}/auxiliary`);
+  const aux = await setDoc(auxRef, {
+    description: post.auxiliary.description,
+    location: post.auxiliary.location,
+    media: post.auxiliary.media,
+    name: post.auxiliary.name,
+    reward: post.auxiliary.reward,
+  });
+  if (file != undefined) {
+    UploadFile(file, `${ref.id}/${file.name}`);
+  }
 }
 
 export async function retrieveAndBundlePosts(posts) {
