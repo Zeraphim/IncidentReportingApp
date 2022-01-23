@@ -1,7 +1,6 @@
 import React,{ useState} from "react";
 import ReactMapGL from "react-map-gl";
 
-
 export default function Map(){
 
     let [viewport, setViewport] = useState({
