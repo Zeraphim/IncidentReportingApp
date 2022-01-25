@@ -105,7 +105,7 @@ async function retrieve(user) {
 }
 
 async function PostLoader(posts) {
-  const data_list = [];
+  let data_list = [];
   posts.forEach((doc) => {
     if (doc.id == 0) {
     } else {

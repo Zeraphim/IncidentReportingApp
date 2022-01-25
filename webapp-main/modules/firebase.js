@@ -149,9 +149,9 @@ export async function retrieveAndBundlePosts(posts) {
     const user_data = retrieveUserData(post.owner).then(
       (user) => (user_data = user)
     );
-    const post_data = {};
-    const aux_data = {};
-    const commentData = {};
+    let post_data = {};
+    let aux_data = {};
+    let commentData = {};
     fetchAux(post).then((aux) => {
       aux_data = {
         description: aux.description,
@@ -168,12 +168,7 @@ export async function retrieveAndBundlePosts(posts) {
           city_id: post.city_id,
           id: post.id,
           owner: post.owner,
-          owner_data: {
-            fName: user_data.fName,
-            lName: user_data.lName,
-            points:
-              user_data.points.comment_points + user_data.points.post_points,
-          },
+          owner_data: user_data,
           auxiliary: aux_data,
           comments: commentData,
           upvotes: post.upvotes,

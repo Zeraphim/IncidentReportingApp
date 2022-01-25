@@ -14,6 +14,7 @@ export default class Post extends Component {
     };
   }
   render() {
+    console.log(this.props.post);
     return (
       <div className="flex bg-gray-100 flex-col mb-3 rounded-lg shadow">
         <div className="h-1/6 flex flex-row relative">
@@ -25,8 +26,11 @@ export default class Post extends Component {
                   ${this.props.post.owner_data.lName}`}
               </h3>
               <p className="text-xs">
-                {determineType(this.props.post.owner_data.points)}{" "}
-                <b>| {this.props.post.city_id}</b>{" "}
+                {determineType(
+                  this.props.post.owner_data.points.post_points +
+                    this.props.post.owner_data.points.comment_points
+                )}{" "}
+                <b>| {this.props.post.owner_data.city}</b>{" "}
               </p>
             </div>
           </div>
@@ -119,10 +123,7 @@ export default class Post extends Component {
           <div className="flex flex-col">
             <Comments commentData={this.state.comments} />{" "}
             <div className="p-3 text-sm">
-              <input
-                className="p-2 rounded-lg w-full"
-                placeholder="Write a comment"
-              />
+              <CommentBuilder data={this.props.post} />
             </div>
           </div>
         ) : (
@@ -132,6 +133,12 @@ export default class Post extends Component {
     );
   }
 }
+
+const CommentBuilder = (props) => {
+  return (
+    <input className="p-2 rounded-lg w-full" placeholder="Write a comment" />
+  );
+};
 
 const Comments = (props) => {
   const [components, setComponents] = useState([]);
