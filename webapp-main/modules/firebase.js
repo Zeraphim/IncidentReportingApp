@@ -65,6 +65,21 @@ export function useAuth() {
   return currentUser;
 }
 
+export async function pushComment(post, comment) {
+  const db = getFirestore();
+  const ref = doc(
+    collection(db, `posts/location/${post.city_id}/${post.id}/comments`)
+  );
+  await setDoc(ref, {
+    uid: comment.uid,
+    message: comment.message,
+    upvotes: 0,
+    downvotes: 0,
+  });
+
+  return ref.id;
+}
+
 async function push_signup(user, data) {
   const db = getFirestore();
   const ref = collection(db, "users");

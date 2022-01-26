@@ -79,7 +79,7 @@ export default class PostFactory extends Component {
           </div>
         );
       }
-      return <PostRenderer posts={this.state.posts} />;
+      return <PostRenderer posts={this.state.posts} user={this.props.user} />;
     }
   }
 }
@@ -122,10 +122,11 @@ async function PostLoader(posts) {
 }
 
 const PostRenderer = (props) => {
+  console.log(props.user);
   const posts = props.posts;
   const post_components = [];
   posts.forEach((post) => {
-    post_components.push(<Post post={post} />);
+    post_components.push(<Post post={post} user={props.user} />);
   });
   return (
     <div className="flex flex-col mt-5">

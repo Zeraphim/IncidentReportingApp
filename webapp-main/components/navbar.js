@@ -62,7 +62,10 @@ const UserButton = (props) => {
       </button>
       {showDialog ? (
         <div className="absolute bg-white p-3 rounded-lg shadow space-y-2 flex flex-col">
-          <button className="text-lg font-bold p-2 text-left" href="/settings">
+          <button
+            className="text-lg font-bold p-2 text-left"
+            onClick={() => window.location.replace("/settings")}
+          >
             Settings
           </button>
           <button

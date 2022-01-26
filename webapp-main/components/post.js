@@ -1,7 +1,8 @@
-import React, { Component, useEffect, useState } from "react";
-import { retrieveUserData } from "../modules/firebase";
+import React, { Component, forwardRef, useEffect, useState } from "react";
+import { pushComment, retrieveUserData } from "../modules/firebase";
 import { getFile } from "../pages/api/UploadFile";
 import Image from "next/image";
+import TextareaAutosize from "react-textarea-autosize";
 
 export default class Post extends Component {
   constructor(props) {
@@ -11,15 +12,94 @@ export default class Post extends Component {
       comments: this.props.post.comments,
       points: this.props.post.upvotes - this.props.post.downvotes,
       previous_point: this.props.post.upvotes - this.props.post.downvotes,
+      settingsModal: false,
     };
+    this.commentRefresh = React.createRef;
+  }
+
+  addComment(comment) {
+    let newComments = this.state.comments;
+    newComments.push(comment);
+    this.setState({ comments: newComments });
+    pushComment(this.props.post, comment);
+    this.commentRefresh.current(comment);
   }
   render() {
+    const user_picture =
+      this.props.post.owner_data.picture == undefined
+        ? "/Profile.svg"
+        : this.props.post.owner_data.picture;
     console.log(this.props.post);
     return (
-      <div className="flex bg-gray-100 flex-col mb-3 rounded-lg shadow">
-        <div className="h-1/6 flex flex-row relative">
-          <div className="p-3 flex flex-row items-center">
-            <div className="mr-3 grid flex-none">Hi</div>
+      <div className="flex bg-gray-100 flex-col mb-3 rounded-lg shadow relative">
+        <div className="h-1/6 flex flex-row relative group">
+          {this.state.settingsModal ? (
+            <div className="absolute z-50 right-0 mr-3 mt-3">
+              <div className="flex justify-end mb-2">
+                <button
+                  className="p-1 rounded-full bg-white shadow hover:scale-125 transition-all duration-400 justify-end"
+                  onClick={() =>
+                    this.setState({ settingsModal: !this.state.settingsModal })
+                  }
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M5 12H5.01M12 12H12.01M19 12H19.01M6 12C6 12.5523 5.55228 13 5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11C5.55228 11 6 11.4477 6 12ZM13 12C13 12.5523 12.5523 13 12 13C11.4477 13 11 12.5523 11 12C11 11.4477 11.4477 11 12 11C12.5523 11 13 11.4477 13 12ZM20 12C20 12.5523 19.5523 13 19 13C18.4477 13 18 12.5523 18 12C18 11.4477 18.4477 11 19 11C19.5523 11 20 11.4477 20 12Z"
+                      stroke="#111827"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="p-3 bg-white shadow-lg rounded-lg flex flex-col font-bold">
+                <a className="py-2">Report this post</a>
+                {this.props.post.owner_data.id == this.props.user.id ? (
+                  <a className="py-2">Delete post</a>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </div>
+          ) : (
+            <button
+              className="hidden group-hover:block absolute p-1 rounded-full bg-white z-50 right-0 mr-3 mt-3 shadow hover:scale-125 transition-all duration-400"
+              onClick={() =>
+                this.setState({ settingsModal: !this.state.settingsModal })
+              }
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 12H5.01M12 12H12.01M19 12H19.01M6 12C6 12.5523 5.55228 13 5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11C5.55228 11 6 11.4477 6 12ZM13 12C13 12.5523 12.5523 13 12 13C11.4477 13 11 12.5523 11 12C11 11.4477 11.4477 11 12 11C12.5523 11 13 11.4477 13 12ZM20 12C20 12.5523 19.5523 13 19 13C18.4477 13 18 12.5523 18 12C18 11.4477 18.4477 11 19 11C19.5523 11 20 11.4477 20 12Z"
+                  stroke="#111827"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          )}
+          <div className="p-3 flex flex-row items-center space-x-2">
+            <Image
+              className="grid flex-none bg-gray-400 rounded-full"
+              src={user_picture}
+              width={30}
+              height={30}
+            />
             <div>
               <h3 className="text-sm">
                 {`${this.props.post.owner_data.fName} 
@@ -121,10 +201,14 @@ export default class Post extends Component {
         </div>
         {this.state.commentsModal ? (
           <div className="flex flex-col">
-            <Comments commentData={this.state.comments} />{" "}
-            <div className="p-3 text-sm">
-              <CommentBuilder data={this.props.post} />
-            </div>
+            <Comments
+              commentData={this.state.comments}
+              ref={this.commentRefresh}
+            />{" "}
+            <CommentBuilder
+              data={this.props.post}
+              addComment={this.addComment.bind(this)}
+            />
           </div>
         ) : (
           <></>
@@ -135,15 +219,74 @@ export default class Post extends Component {
 }
 
 const CommentBuilder = (props) => {
+  const [comment, setComment] = useState("");
+  function postComment() {
+    if (comment.trim().length == 0) alert("Comment has nothing.");
+    else {
+      let commentToAdd = {
+        uid: props.data.owner_data.id,
+        message: comment,
+        upvotes: 0,
+        downvotes: 0,
+      };
+
+      props.addComment(commentToAdd);
+      setComment("");
+    }
+  }
   return (
-    <input className="p-2 rounded-lg w-full" placeholder="Write a comment" />
+    <div className="p-3 relative">
+      <TextareaAutosize
+        className="p-2 rounded-lg w-full resize-none text-sm"
+        placeholder="Write a comment..."
+        maxRows={5}
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        id={`${props.data.id}`}
+      />
+      {comment != "" ? (
+        <button
+          className="rounded-full pt-1 pb-1 pl-2 pr-2 text-xs absolute bg-blue-400 right-0 mr-5 mt-1"
+          onClick={() => postComment()}
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 25 23"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g id="Iconly/Light/Send">
+              <g id="Send">
+                <path
+                  id="Send_2"
+                  d="M15.8325 8.17463L10.109 13.9592L3.59944 9.88767C2.66675 9.30414 2.86077 7.88744 3.91572 7.57893L19.3712 3.05277C20.3373 2.76963 21.2326 3.67283 20.9456 4.642L16.3731 20.0868C16.0598 21.1432 14.6512 21.332 14.0732 20.3953L10.106 13.9602"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </g>
+            </g>
+          </svg>
+        </button>
+      ) : (
+        <></>
+      )}
+    </div>
   );
 };
 
-const Comments = (props) => {
+const Comments = forwardRef((props, ref) => {
   const [components, setComponents] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const commentData = props.commentData; //Sample format
+  const addComment = (comment) => {
+    const newComponents = components;
+    newComponents.push(<Comment data={comment} />);
+    setComponents(newComponents);
+  };
+  ref.current = addComment;
   if (!loaded) {
     if (commentData.length > 0) {
       const commentComponents = [];
@@ -155,7 +298,7 @@ const Comments = (props) => {
       return <></>;
     } else return <></>;
   } else return <>{components}</>;
-};
+});
 
 const Comment = (props) => {
   const [user, setUser] = useState(null);
