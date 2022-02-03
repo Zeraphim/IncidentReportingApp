@@ -22,11 +22,17 @@ export default class PostFactory extends Component {
         this.setState({ ready: true });
       } else if (!this.state.loaded) {
         console.log("State change");
-        retrieve(this.props.user).then((docs) => {
-          PostLoader(docs.docs).then((posts) => {
-            this.setState({ posts: posts, loaded: true });
-          });
-        });
+        this.props.user != null
+          ? retrieve(this.props.user).then((docs) => {
+              PostLoader(docs.docs).then((posts) => {
+                this.setState({ posts: posts, loaded: true });
+              });
+            })
+          : retrieve(null, this.props.location).then((docs) => {
+              PostLoader(docs.docs).then((posts) => {
+                this.setState({ posts: posts, loaded: true });
+              });
+            });
       }
     }, 2000);
   }
@@ -39,7 +45,7 @@ export default class PostFactory extends Component {
     }
     if (!this.state.ready) {
       return (
-        <div className="flex bg-white flex-col mb-3 rounded shadow mt-3">
+        <div className={this.props.className} style={this.props.style}>
           <div className="h-1/6 grid grid-cols-2 animate-pulse">
             <div className="col-span-1 pl-3 pt-3 flex flex-row items-center">
               <div className="mr-3">
@@ -95,13 +101,20 @@ export default class PostFactory extends Component {
       });
       return <>Loading...</>;
     } */
-async function retrieve(user) {
-  const db = getFirestore();
-  const querySnapshot = await getDocs(
-    collection(db, "posts", `location/${user.city_id}`)
-  );
-  console.log(querySnapshot.size);
-  return querySnapshot;
+async function retrieve(user, location) {
+  if (user != null) {
+    const db = getFirestore();
+    const querySnapshot = await getDocs(
+      collection(db, "posts", `location/${user.city_id}`)
+    );
+    return querySnapshot;
+  } else {
+    const db = getFirestore();
+    const querySnapshot = await getDocs(
+      collection(db, "posts", `location/${location}`)
+    );
+    return querySnapshot;
+  }
 }
 
 async function PostLoader(posts) {
@@ -130,7 +143,7 @@ const PostRenderer = (props) => {
   });
   return (
     <div className="flex flex-col mt-5">
-      <div className="space-y-5">{post_components}</div>
+      <div className="space-y-5 pb-5">{post_components}</div>
     </div>
   );
 };

@@ -4,7 +4,7 @@ export default class Reputation extends Component {
   render() {
     return (
       <>
-        <div className="p-5 bg-gray-100 h-auto rounded-md shadow invisible lg:visible select-none">
+        <div className="p-5 bg-white h-auto rounded-lg shadow-lg invisible lg:visible select-none">
           <div className="grid grid-cols-2 mb-3">
             <div className="col-span-1">
               <p className="text-sm 2xl:text-md">Post Reputation</p>

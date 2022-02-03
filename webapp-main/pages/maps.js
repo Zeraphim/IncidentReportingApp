@@ -25,7 +25,7 @@ import {
 } from "../modules/firebase";
 import PostFactory from "../components/PostFactory";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import Map from "../components/Map";
+import MapSVG from "../components/mapSVG";
 
 export default function Maps() {
   const [loading, setLoading] = useState(true);
@@ -61,8 +61,6 @@ export default function Maps() {
     }
   });
 
- 
-
   const emailRef = useRef();
   const passwordRef = useRef();
 
@@ -94,11 +92,11 @@ export default function Maps() {
         </Head>
         <Navbar data={userData} />
         <div className="flex grid-cols-10 justify-center mx-2 xl:mx-16 2xl:mx-64 gap-x-4">
-          <div className="col-span-2  h-screen hidden lg:block">
+          <div className="col-span-2 hidden lg:block">
             <Sidebar user={userData} />
           </div>
-          <div className=" h-screen col-span-10 lg:col-span-5 overflow-auto no-scrollbar">
-            <Map user={userData} />
+          <div className="col-span-10 lg:col-span-5 overflow-auto no-scrollbar">
+            <MapSVG user={userData} />
           </div>
         </div>
       </div>

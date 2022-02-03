@@ -9,6 +9,7 @@ import cookie from "js-cookie";
 import { useRef, useState } from "react";
 
 import { login, useAuth } from "../modules/firebase";
+import Head from "next/head";
 
 function addCookie(val) {
   cookie.set("SID", val, { expires: 1 / 24 });
@@ -41,6 +42,9 @@ export default function Login() {
 
   return (
     <div className="h-screen">
+      <Head>
+        <title>Log In | AGAP</title>
+      </Head>
       <OnboardingNavBar />
       <div className="mx-8 xl:mx-16 2xl:mx-64 grid grid-rows-2 lg:grid-cols-2 lg:grid-rows-none justify-items-center items-center lg:h-3/4">
         <div className="row-span-1 lg:col-span-1 justify-items-center items-center p-5">
@@ -58,7 +62,7 @@ export default function Login() {
           </p>
         </div>
         <div className="row-span-1 lg:col-span-1 grow-0 p-5 w-full">
-          <div className="p-6 shadow-lg rounded-lg">
+          <div className="p-6 shadow-lg rounded-lg bg-white">
             <form
               className="space-y-4"
               onSubmit={handleSubmit((data) => upload(data))}

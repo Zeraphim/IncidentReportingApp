@@ -156,6 +156,40 @@ export async function uploadPost(post, user, file) {
   }
 }
 
+export async function retrieveAndBundlePost(post) {
+  const user_data = retrieveUserData(post.owner).then(
+    (user) => (user_data = user)
+  );
+  let post_data = {};
+  let aux_data = {};
+  let commentData = {};
+  await fetchAux(post).then((aux) => {
+    aux_data = {
+      description: aux.description,
+      location: aux.location,
+      media: aux.media,
+      name: aux.name,
+      reward: aux.reward,
+    };
+  });
+  await fetchComments(post).then((comments) => {
+    commentData = comments;
+  });
+  post_data = {
+    caption: post.caption,
+    category: post.category,
+    city_id: post.city_id,
+    id: post.id,
+    owner: post.owner,
+    owner_data: user_data,
+    auxiliary: aux_data,
+    comments: commentData,
+    upvotes: post.upvotes,
+    downvotes: post.downvotes,
+  };
+  return post_data;
+}
+
 export async function retrieveAndBundlePosts(posts) {
   const users = [];
   const postAux_list = [];

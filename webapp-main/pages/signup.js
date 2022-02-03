@@ -9,6 +9,7 @@ import Select from "react-select";
 import { useRef, useState, useEffect } from "react";
 import { collection, doc, setDoc, getDocs } from "firebase/firestore";
 import { signup } from "../modules/firebase";
+import Head from "next/head";
 
 export default function Signup() {
   // Firebase
@@ -84,6 +85,9 @@ export default function Signup() {
   ];
   return (
     <div className="h-screen">
+      <Head>
+        <title>Sign Up | AGAP</title>
+      </Head>
       <OnboardingNavBar />
       <div className="mx-8 xl:mx-16 2xl:mx-64 grid grid-rows-2 lg:grid-cols-2 lg:grid-rows-none justify-items-center items-center lg:h-3/4">
         <div className="row-span-1 lg:col-span-1 justify-items-center items-center p-5">
@@ -102,7 +106,7 @@ export default function Signup() {
           </p>
         </div>
         <div className="row-span-1 lg:col-span-1 grow-0 p-5">
-          <div className="p-6 shadow-lg rounded-lg">
+          <div className="p-6 shadow-lg rounded-lg bg-white">
             <form
               className="space-y-4"
               onSubmit={handleSubmit((data) => upload(data))}
@@ -111,7 +115,7 @@ export default function Signup() {
                 <div className="col-span-1 space-y-2">
                   <label>First Name</label>
                   <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="shadow-inner appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="fname"
                     type="first_name"
                     placeholder="John"
@@ -121,7 +125,7 @@ export default function Signup() {
                 <div className="col-span-1 space-y-2">
                   <label>Last Name</label>
                   <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="shadow-inner appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="lname"
                     type="last_name"
                     placeholder="Doe"
@@ -135,7 +139,7 @@ export default function Signup() {
                   <div className="space-y-2">
                     <label>Email</label>
                     <input
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      className="shadow-inner appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       id="email"
                       type="email"
                       placeholder="johndoe@agap.ph"
@@ -148,7 +152,7 @@ export default function Signup() {
                 <div className="space-y-2">
                   <label>Password</label>
                   <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="shadow-inner appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="password"
                     type="password"
                     placeholder="Password"
@@ -166,7 +170,7 @@ export default function Signup() {
                   name="date-input"
                   render={({ field }) => (
                     <DatePicker
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      className="shadow-inner appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       placeholderText="Select date"
                       onChange={(date) => field.onChange(date)}
                       selected={field.value}

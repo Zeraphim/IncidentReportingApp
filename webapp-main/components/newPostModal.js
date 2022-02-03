@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import UploadFile from "../pages/api/UploadFile";
 import PostAuxiliary from "./PostAuxillary";
+import { uploadPost } from "../modules/firebase";
 
 const NewPostModal = (props) => {
   const [showModal, setShowModal] = React.useState(false);
@@ -31,13 +32,16 @@ const NewPostModal = (props) => {
     setFiles(null);
   }
 
+  function add_post() {}
+
   function bundleData() {
+    console.log(props);
     const dataToExport = {
-      user: props.userData,
-      caption: caption,
+      user: props.user,
+      caption: document.getElementById("caption-editable-div").innerText,
       category: type,
       auxiliary: {
-        media: files,
+        media: null,
         name: name,
         location: location,
         description: description,
@@ -45,9 +49,12 @@ const NewPostModal = (props) => {
       },
     };
     console.log(dataToExport);
-    alert("Bundled");
     resetComponent();
-    UploadFile(dataToExport.auxiliary.media);
+
+    if (files != null) {
+      dataToExport.auxiliary.media = files.name;
+    }
+    uploadPost(dataToExport, props.user, files);
     /*
     POST JSON FORMAT
     
@@ -76,7 +83,7 @@ const NewPostModal = (props) => {
   return (
     <>
       <div
-        className="w-full bg-gray-200 py-5 px-3 rounded flex flex-row items-center"
+        className="w-full bg-gray-300 py-5 px-3 rounded-lg flex flex-row shadow-inner items-center"
         type="button"
         onClick={() => setShowModal(true)}
         style={{
@@ -100,7 +107,9 @@ const NewPostModal = (props) => {
           />
         </svg>
 
-        <a className="text-gray-500 text-lg">What's going on?</a>
+        <a className="text-gray-500 text-lg">
+          What's going on, {`${props.user.fName}`}?
+        </a>
       </div>
       {showModal ? (
         <>
@@ -118,7 +127,7 @@ const NewPostModal = (props) => {
                   className="break-all focus:outline-none display:inline-block mb-2"
                   contentEditable="true"
                   data-text="Tell everyone what's going on."
-                  onChange={(e) => setCaption(e.target.value)}
+                  id="caption-editable-div"
                 ></p>
                 <PostAuxiliary
                   type={type}

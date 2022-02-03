@@ -31,7 +31,7 @@ export default class Post extends Component {
         : this.props.post.owner_data.picture;
     console.log(this.props.post);
     return (
-      <div className="flex bg-gray-100 flex-col mb-3 rounded-lg shadow relative">
+      <div className="flex bg-white flex-col mb-3 rounded-lg shadow relative">
         <div className="h-1/6 flex flex-row relative group">
           {this.state.settingsModal ? (
             <div className="absolute z-50 right-0 mr-3 mt-3">
@@ -122,7 +122,7 @@ export default class Post extends Component {
         <div className="h-1/6 grid grid-cols-3 bg-gray-300 rounded-b-lg">
           {this.state.upvote ? (
             <button
-              className="col-span-1 py-4 font-bold bg-green-600 text-white transition-all hover:bg-gray-300 hover:text-black duration-500 rounded-bl-lg"
+              className="col-span-1 py-4 font-bold bg-green-600 text-white transition-all duration-500 rounded-bl-lg flex justify-center"
               onClick={() =>
                 this.setState({
                   upvote: false,
@@ -130,11 +130,26 @@ export default class Post extends Component {
                 })
               }
             >
-              Upvote
+              <svg
+                width="25"
+                height="25"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="lg:hidden"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M10.1151 0C15.6439 0 20.1311 4.49 20.1311 10L20.1272 10.2798C19.9787 15.6706 15.5502 20 10.1151 20C4.59629 20 0.0991211 15.52 0.0991211 10C0.0991211 4.49 4.59629 0 10.1151 0ZM6.10865 11.98C6.40913 12.27 6.87988 12.27 7.17035 11.97L10.115 9.02002L13.0597 11.97C13.3502 12.27 13.831 12.27 14.1214 11.98C14.4219 11.68 14.4219 11.21 14.1214 10.92L10.6459 7.43002C10.5057 7.29002 10.3154 7.21002 10.115 7.21002C9.91472 7.21002 9.72442 7.29002 9.5842 7.43002L6.10865 10.92C5.95841 11.06 5.8883 11.25 5.8883 11.44C5.8883 11.64 5.95841 11.83 6.10865 11.98Z"
+                  fill="white"
+                />
+              </svg>
+              <p className="hidden lg:block">Upvote</p>
             </button>
           ) : (
             <button
-              className="col-span-1 py-4 font-bold hover:text-white transition-all hover:bg-green-600 duration-500 hover:rounded-bl-lg"
+              className="col-span-1 py-4 font-bold lg:hover:text-white transition-all lg:hover:bg-green-600 duration-500 lg:hover:rounded-bl-lg flex justify-center"
               onClick={() =>
                 this.setState({
                   upvote: true,
@@ -144,12 +159,27 @@ export default class Post extends Component {
                 })
               }
             >
-              Upvote
+              <svg
+                width="25"
+                height="25"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="lg:hidden"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M10.1151 0C15.6439 0 20.1311 4.49 20.1311 10L20.1272 10.2798C19.9787 15.6706 15.5502 20 10.1151 20C4.59629 20 0.0991211 15.52 0.0991211 10C0.0991211 4.49 4.59629 0 10.1151 0ZM6.10865 11.98C6.40913 12.27 6.87988 12.27 7.17035 11.97L10.115 9.02002L13.0597 11.97C13.3502 12.27 13.831 12.27 14.1214 11.98C14.4219 11.68 14.4219 11.21 14.1214 10.92L10.6459 7.43002C10.5057 7.29002 10.3154 7.21002 10.115 7.21002C9.91472 7.21002 9.72442 7.29002 9.5842 7.43002L6.10865 10.92C5.95841 11.06 5.8883 11.25 5.8883 11.44C5.8883 11.64 5.95841 11.83 6.10865 11.98Z"
+                  fill="black"
+                />
+              </svg>
+              <p className="hidden lg:block">Upvote</p>
             </button>
           )}
           {this.state.downvote ? (
             <button
-              className="col-span-1 py-4 font-bold bg-red-600 text-white transition-all hover:bg-gray-300 hover:text-black duration-500"
+              className="col-span-1 py-4 font-bold bg-red-600 text-white transition-all duration-500"
               onClick={() =>
                 this.setState({
                   downvote: false,
@@ -161,7 +191,7 @@ export default class Post extends Component {
             </button>
           ) : (
             <button
-              className="col-span-1 py-4 font-bold hover:text-white transition-all hover:bg-red-600 duration-500"
+              className="col-span-1 py-4 font-bold lg:hover:text-white transition-all lg:hover:bg-red-600 duration-500"
               onClick={() =>
                 this.setState({
                   downvote: true,
@@ -176,20 +206,20 @@ export default class Post extends Component {
           )}
           {this.state.commentsModal ? (
             <button
-              className="col-span-1 py-4 font-bold bg-gray-700 text-white transition-all hover:bg-gray-300 hover:text-black duration-500"
+              className="col-span-1 py-4 font-bold bg-gray-700 text-white transition-all duration-500"
               onClick={() => this.setState({ commentsModal: false })}
             >
               Comment
             </button>
           ) : (
             <button
-              className="col-span-1 py-4 font-bold hover:text-white transition-all hover:bg-gray-700 duration-500 hover:rounded-r-lg hover:rounded-b-lg hover:rounded-t-none hover:rounded-l-none"
+              className="col-span-1 py-4 font-bold lg:hover:text-white transition-all lg:hover:bg-gray-700 duration-500 lg:hover:rounded-r-lg lg:hover:rounded-b-lg lg:hover:rounded-t-none lg:hover:rounded-l-none"
               onClick={() => this.setState({ commentsModal: true })}
             >
               <div className="flex flex-row justify-center">
                 Comment{" "}
                 {this.state.comments.length > 0 ? (
-                  <p className="ml-2 px-2 py-1 rounded-full text-xs bg-white text-black hover:bg-gray-900 hover:text-white">
+                  <p className="ml-2 px-2 py-1 rounded-full text-xs bg-white text-black hover:bg-gray-900 hover:text-white lg:block hidden">
                     {this.state.comments.length}
                   </p>
                 ) : (
@@ -235,9 +265,9 @@ const CommentBuilder = (props) => {
     }
   }
   return (
-    <div className="p-3 relative">
+    <div className="p-3 relative bg-gray-100">
       <TextareaAutosize
-        className="p-2 rounded-lg w-full resize-none text-sm"
+        className="p-2 rounded-lg w-full resize-none text-sm shadow-inner"
         placeholder="Write a comment..."
         maxRows={5}
         value={comment}
@@ -297,7 +327,7 @@ const Comments = forwardRef((props, ref) => {
       setLoaded(true);
       return <></>;
     } else return <></>;
-  } else return <>{components}</>;
+  } else return <div className="bg-gray-100">{components}</div>;
 });
 
 const Comment = (props) => {
@@ -334,7 +364,7 @@ const Comment = (props) => {
             )}
           </div>
           <div>
-            <div className="p-2 ml-2 text-sm bg-white rounded-lg">
+            <div className="p-2 ml-2 text-sm bg-white rounded-lg shadow-lg">
               <div className="mr-2 font-bold text-xs">{`${user.fName} ${user.lName}`}</div>{" "}
               <p>{props.data.message}</p>
             </div>
@@ -455,7 +485,7 @@ const Auxiliary = (props) => {
     );
   } else if (props.post.category == "missing") {
     return (
-      <div className="p-3 rounded shadow flex flex-col space-y-none bg-yellow-300 text-white">
+      <div className="p-3 rounded shadow flex flex-col space-y-none bg-yellow-400 text-white">
         {data.media != null ? <DisplayMedia data={props.post} /> : <></>}
         <p>
           Name of missing person(s): <b>{data.name}</b>

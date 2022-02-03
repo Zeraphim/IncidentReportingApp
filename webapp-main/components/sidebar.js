@@ -5,7 +5,7 @@ export default class Sidebar extends Component {
   render() {
     return (
       <>
-        <div className="p-5 bg-gray-100 h-auto rounded-md shadow invisible lg:visible">
+        <div className="p-5 bg-white h-auto rounded-lg shadow-lg invisible lg:visible">
           <ul className="text-xl text-slate-900 font-bold 2xl:text-2xl space-y-3 mb-5">
             <li>
               <Link href="/">
@@ -19,7 +19,7 @@ export default class Sidebar extends Component {
             </li>
             <li>
               <Link href="/notifications">
-                <a>Notifications</a>
+                <a>About Us</a>
               </Link>
             </li>
           </ul>
