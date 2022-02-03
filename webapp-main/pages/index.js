@@ -24,6 +24,7 @@ import {
 } from "../modules/firebase";
 import PostFactory from "../components/PostFactory";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import MobileNavBar from "../components/mobile_navbar";
 
 // Checks if there's a cookie in the browser, if there's none redirect to login page
 function checkSID() {
@@ -113,24 +114,28 @@ export default function Home() {
     return <>Loading...</>;
   } else {
     return (
-      <>
+      <div className="h-screen w-screen relative">
         <Head>
           <title>AGAP - The Social Safety Network</title>
         </Head>
         <Navbar data={userData} />
         <div className="flex grid grid-cols-10 justify-center mx-2 xl:mx-16 2xl:mx-64 gap-x-4">
-          <div className="col-span-2  h-screen hidden lg:block">
+          <div className="col-span-2 hidden lg:block">
             <Sidebar user={userData} />
           </div>
-          <div className=" h-screen col-span-10 lg:col-span-5 overflow-auto no-scrollbar">
+          <div className=" col-span-10 lg:col-span-5 overflow-auto no-scrollbar">
             <NewPostModal user={userData} />
-            <PostFactory user={userData} />
+            <PostFactory
+              user={userData}
+              className="flex bg-white flex-col mb-3 rounded shadow mt-3"
+            />
           </div>
-          <div className="col-span-3 h-screen hidden lg:block">
+          <div className="col-span-3 hidden lg:block">
             <Reputation user={userData} />
           </div>
         </div>
-      </>
+        <MobileNavBar />
+      </div>
     );
   }
 }
