@@ -112,7 +112,11 @@ const Settings = (props) => {
   };
 
   function submitChanges() {
-    changeSettings(userData, changes, options[city_id - 1].label);
+    changeSettings(
+      userData,
+      changes,
+      changes.location != "" ? options[city_id - 1].label : ""
+    );
     setChanges({
       fName: "",
       lName: "",

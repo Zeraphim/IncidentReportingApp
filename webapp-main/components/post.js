@@ -240,6 +240,7 @@ export default class Post extends Component {
             <CommentBuilder
               data={this.props.post}
               addComment={this.addComment.bind(this)}
+              user={this.props.user}
             />
           </div>
         ) : (
@@ -256,7 +257,7 @@ const CommentBuilder = (props) => {
     if (comment.trim().length == 0) alert("Comment has nothing.");
     else {
       let commentToAdd = {
-        uid: props.data.owner_data.id,
+        uid: props.user.id,
         message: comment,
         upvotes: 0,
         downvotes: 0,
@@ -357,10 +358,13 @@ const Comment = (props) => {
                 className="rounded-full bg-gray-300"
               />
             ) : (
-              <Image
+              <img
                 src={user.picture}
-                width={25}
-                height={25}
+                style={{
+                  maxWidth: "25px",
+                  maxHeight: "25px",
+                  objectFit: "contain",
+                }}
                 className="rounded-full bg-gray-300"
               />
             )}

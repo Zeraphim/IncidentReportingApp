@@ -280,7 +280,7 @@ export async function changeSettings(user, changes, city) {
     fName: newFName != "" ? newFName : user.fName,
     lName: newLName != "" ? newLName : user.lName,
     email: user.email,
-    city: city,
+    city: city != "" ? city : user.city,
     city_id: newLocation != "" ? newLocation : user.city_id,
     picture: newPicture != null ? newPicture.name : user.picture,
     id: user.id.trim(),
