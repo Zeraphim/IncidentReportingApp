@@ -359,7 +359,7 @@ const Comment = (props) => {
               />
             ) : (
               <img
-                src={user.picture}
+                src={user.pictureURL}
                 style={{
                   maxWidth: "25px",
                   maxHeight: "25px",
