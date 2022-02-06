@@ -18,8 +18,15 @@ import {
   document,
   addDoc,
   getFirestore,
+  updateDoc,
 } from "firebase/firestore";
 import UploadFile from "../pages/api/UploadFile";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -90,6 +97,7 @@ async function push_signup(user, data) {
     city: data.city,
     city_id: data.city_id,
     email: data.email,
+    picture: "",
     points: {
       post_points: 0,
       comment_points: 0,
@@ -101,11 +109,19 @@ async function push_signup(user, data) {
 }
 
 export async function retrieveUserData(uid) {
-  console.log(`Fetching data for ${uid}`);
   const db = getFirestore();
-  const ref = doc(db, "users", uid);
-  const querySnapshot = await getDoc(ref);
-  return querySnapshot.data();
+  const docref = doc(db, "users", uid);
+  const querySnapshot = await getDoc(docref);
+  let userData = querySnapshot.data();
+  console.log(userData);
+  if (userData.picture != "") {
+    const storage = getStorage();
+    const storageRef = ref(storage, `${uid}/${userData.picture}`);
+    const url = await getDownloadURL(storageRef);
+    userData["pictureURL"] = url;
+    console.log("User data: ", userData);
+    return userData;
+  } else return userData;
 }
 
 async function fetchAux(post) {
@@ -130,6 +146,13 @@ async function fetchComments(post) {
 
 export async function uploadPost(post, user, file) {
   const db = getFirestore();
+  const length_Raw = await getDoc(
+    doc(db, `posts/location/${user.city_id}/`, "0")
+  );
+  const length = length_Raw.data();
+  await setDoc(doc(db, `posts/location/${user.city_id}`, "0"), {
+    length: length.length + 1,
+  });
   const ref = doc(collection(db, `posts/location/${user.city_id}/`));
   const data = await setDoc(ref, {
     id: ref.id,
@@ -143,7 +166,6 @@ export async function uploadPost(post, user, file) {
   const auxRef = doc(
     collection(db, "posts", `location/${user.city_id}/${ref.id}/auxiliary`)
   );
-  console.log(`location/${user.city_id}/${ref.id}/auxiliary`);
   const aux = await setDoc(auxRef, {
     description: post.auxiliary.description,
     location: post.auxiliary.location,
@@ -157,12 +179,13 @@ export async function uploadPost(post, user, file) {
 }
 
 export async function retrieveAndBundlePost(post) {
-  const user_data = retrieveUserData(post.owner).then(
-    (user) => (user_data = user)
-  );
+  let user_data = {};
   let post_data = {};
   let aux_data = {};
   let commentData = {};
+  await retrieveUserData(post.owner).then((user) => {
+    user_data = user;
+  });
   await fetchAux(post).then((aux) => {
     aux_data = {
       description: aux.description,
@@ -194,8 +217,8 @@ export async function retrieveAndBundlePosts(posts) {
   const users = [];
   const postAux_list = [];
   const bundledPosts = [];
-  posts.forEach((post) => {
-    const user_data = retrieveUserData(post.owner).then(
+  await posts.forEach(async (post) => {
+    let user_data = await retrieveUserData(post.owner).then(
       (user) => (user_data = user)
     );
     let post_data = {};
@@ -229,4 +252,44 @@ export async function retrieveAndBundlePosts(posts) {
   });
 
   return bundledPosts;
+}
+
+async function uploadProfilePicture(file, uid) {
+  const storage = getStorage();
+  const storageRef = ref(storage, `${uid.trim()}/${file.name}`);
+
+  const uploadTask = uploadBytesResumable(storageRef, file);
+}
+
+export async function changeSettings(user, changes, city) {
+  console.log("Change settings data: ", changes);
+  let newFName = "";
+  let newLName = "";
+  let newLocation = "";
+  let newPicture = null;
+  if (changes.fName != "") newFName = changes.fName;
+  if (changes.lName != "") newFName = changes.lName;
+  if (changes.location != "") newLocation = changes.location;
+  if (changes.picture != null) {
+    await uploadProfilePicture(changes.picture, user.id).then(() => {
+      console.log("Finished uploading");
+    });
+    newPicture = changes.picture;
+  }
+  let newUserData = {
+    fName: newFName != "" ? newFName : user.fName,
+    lName: newLName != "" ? newLName : user.lName,
+    email: user.email,
+    city: city,
+    city_id: newLocation != "" ? newLocation : user.city_id,
+    picture: newPicture != null ? newPicture.name : user.picture,
+    id: user.id.trim(),
+    points: {
+      post_points: user.points.post_points,
+      comment_points: user.points.comment_points,
+    },
+  };
+  const db = getFirestore();
+  const ref = collection(db, "users");
+  await updateDoc(doc(ref, user.id.trim()), newUserData);
 }

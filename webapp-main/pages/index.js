@@ -74,7 +74,6 @@ export default function Home() {
       if (currentUser && loading) {
         loadData().then((data) => {
           setUserData(data);
-          console.log(userData);
           setLoading(false);
         });
       }
@@ -134,7 +133,7 @@ export default function Home() {
             <Reputation user={userData} />
           </div>
         </div>
-        <MobileNavBar />
+        <MobileNavBar active={1} />
       </div>
     );
   }

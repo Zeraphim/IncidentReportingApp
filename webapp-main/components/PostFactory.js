@@ -21,7 +21,6 @@ export default class PostFactory extends Component {
       if (this.state.loaded && !this.state.ready) {
         this.setState({ ready: true });
       } else if (!this.state.loaded) {
-        console.log("State change");
         this.props.user != null
           ? retrieve(this.props.user).then((docs) => {
               PostLoader(docs.docs).then((posts) => {
@@ -74,10 +73,7 @@ export default class PostFactory extends Component {
           <div className="text-gray-400 text-md p-3">
             Seems like there are no reports in your location yet. If you've set
             the wrong location, you can change it{" "}
-            <a
-              href="/settings/location"
-              className="text-gray-600 hover:text-black"
-            >
+            <a href="/settings" className="text-gray-600 hover:text-black">
               here
             </a>
             . Otherwise, you can try to reload the page to check if any new
@@ -85,7 +81,13 @@ export default class PostFactory extends Component {
           </div>
         );
       }
-      return <PostRenderer posts={this.state.posts} user={this.props.user} />;
+      return (
+        <PostRenderer
+          posts={this.state.posts}
+          user={this.props.user}
+          mini={this.props.mini}
+        />
+      );
     }
   }
 }
@@ -135,11 +137,12 @@ async function PostLoader(posts) {
 }
 
 const PostRenderer = (props) => {
-  console.log(props.user);
   const posts = props.posts;
   const post_components = [];
   posts.forEach((post) => {
-    post_components.push(<Post post={post} user={props.user} />);
+    post_components.unshift(
+      <Post post={post} user={props.user} mini={props.mini} />
+    );
   });
   return (
     <div className="flex flex-col mt-5">

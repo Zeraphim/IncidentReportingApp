@@ -26,6 +26,7 @@ import {
 import PostFactory from "../components/PostFactory";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import MapSVG from "../components/mapSVG";
+import MobileNavBar from "../components/mobile_navbar";
 
 export default function Maps() {
   const [loading, setLoading] = useState(true);
@@ -99,6 +100,7 @@ export default function Maps() {
             <MapSVG user={userData} />
           </div>
         </div>
+        <MobileNavBar active={2} />
       </div>
     );
   }

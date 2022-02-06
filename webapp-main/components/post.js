@@ -25,15 +25,15 @@ export default class Post extends Component {
     this.commentRefresh.current(comment);
   }
   render() {
+    console.log("Post data: ", this.props.post);
     const user_picture =
-      this.props.post.owner_data.picture == undefined
+      this.props.post.owner_data.picture == ""
         ? "/Profile.svg"
-        : this.props.post.owner_data.picture;
-    console.log(this.props.post);
+        : this.props.post.owner_data.pictureURL;
     return (
       <div className="flex bg-white flex-col mb-3 rounded-lg shadow relative">
         <div className="h-1/6 flex flex-row relative group">
-          {this.state.settingsModal ? (
+          {this.state.settingsModal && !this.props.mini ? (
             <div className="absolute z-50 right-0 mr-3 mt-3">
               <div className="flex justify-end mb-2">
                 <button
@@ -69,7 +69,7 @@ export default class Post extends Component {
                 )}
               </div>
             </div>
-          ) : (
+          ) : !this.props.mini ? (
             <button
               className="hidden group-hover:block absolute p-1 rounded-full bg-white z-50 right-0 mr-3 mt-3 shadow hover:scale-125 transition-all duration-400"
               onClick={() =>
@@ -92,6 +92,8 @@ export default class Post extends Component {
                 />
               </svg>
             </button>
+          ) : (
+            <></>
           )}
           <div className="p-3 flex flex-row items-center space-x-2">
             <Image
@@ -347,7 +349,7 @@ const Comment = (props) => {
       <>
         <div className="flex flex-row p-3 hover:bg-gray-300 transition-all duration-500">
           <div className="flex-none">
-            {user.picture == undefined ? (
+            {user.picture == "" ? (
               <Image
                 src={"/Profile.svg"}
                 width={30}
@@ -428,11 +430,11 @@ function postPoints(points) {
 
 function determineType(points) {
   if (points == 0 && points > -1 && points < 100) {
-    return <small>USER</small>;
+    return <small className="text-xs font-bold">USER</small>;
   } else if (points >= 100) {
-    return <small>VERIFIED</small>;
+    return <small className="text-xs font-bold text-green-600">TRUSTED</small>;
   } else if (points < -1) {
-    return <small>UNRELIABLE</small>;
+    return <small className="text-xs font-bold">UNRELIABLE</small>;
   }
 }
 

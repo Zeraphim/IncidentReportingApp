@@ -41,8 +41,17 @@ const UserButton = (props) => {
         className="px-5 py-2 bg-gray-200 rounded-3xl text-md hover:bg-gray-400 flex flex-row items-center"
         onClick={() => setDialog(!showDialog)}
       >
-        <img className="mr-5" src={defaultUser} />
-        <p className="mr-16">{username}</p>
+        {props.data.picture == "" ? (
+          <img src={defaultUser} />
+        ) : (
+          <Image
+            className="rounded-full"
+            src={props.data.pictureURL}
+            width={25}
+            height={25}
+          />
+        )}
+        <p className="mr-16 ml-3">{username}</p>
         <svg
           width="11"
           height="7"
@@ -61,7 +70,7 @@ const UserButton = (props) => {
         </svg>
       </button>
       {showDialog ? (
-        <div className="absolute bg-white p-3 rounded-lg shadow space-y-2 flex flex-col">
+        <div className="absolute bg-white p-3 rounded-lg shadow space-y-2 flex flex-col z-50">
           <button
             className="text-lg font-bold p-2 text-left"
             onClick={() => window.location.replace("/settings")}

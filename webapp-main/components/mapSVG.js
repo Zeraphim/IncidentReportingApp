@@ -17,7 +17,7 @@ const MapSVG = (props) => {
   const [ready, setReady] = useState(false);
   const [displaylocation, setLocation] = useState("");
   function displayModal(location) {
-    if (modal && location == displaylocation) setModal(false);
+    if (modal) setModal(false);
     else if (location != displaylocation) setModal(true);
     else setModal(!modal);
     setLocation(location);
@@ -56,8 +56,8 @@ const MapSVG = (props) => {
             data-name="Layer 1"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 276.05 487.65"
-            height="80vh"
-            width="80vh"
+            height="90vh"
+            width="auto"
             className="cursor-pointer"
           >
             <defs></defs>
@@ -194,11 +194,13 @@ const MapSVG = (props) => {
           </svg>
           {modal ? (
             <div
-              className="bg-white p-3 rounded-lg shadow-lg absolute lg:left-0 bottom-0 text-gray-400 w-full overflow-y-auto no-scrollbar"
+              className="bg-white p-3 rounded-lg shadow-lg absolute lg:left-0 bottom-0 w-full overflow-y-auto no-scrollbar"
               style={{ maxHeight: "70%" }}
             >
-              <div className="hidden w-full relative" />
-              Reports in {options[displaylocation]}
+              <div className="hidden w-full relative " />
+              <p className="text-gray-400 pointer-events-none">
+                Reports in {options[displaylocation]}
+              </p>
               <a
                 className="absolute right-0 top-0 mr-5 mt-4 cursor-pointer"
                 onClick={() => {
@@ -226,6 +228,7 @@ const MapSVG = (props) => {
                 user={null}
                 location={displaylocation}
                 className="flex bg-white flex-col mb-3 rounded shadow mt-3"
+                mini={true}
               />
             </div>
           ) : (
