@@ -146,7 +146,12 @@ const PostRenderer = (props) => {
   });
   return (
     <div className="flex flex-col mt-5">
-      <div className="space-y-5 pb-5">{post_components}</div>
+      <div
+        className="space-y-5 pb-5 overflow-y-auto no-scrollbar"
+        style={{ maxHeight: "720px" }}
+      >
+        {post_components}
+      </div>
     </div>
   );
 };

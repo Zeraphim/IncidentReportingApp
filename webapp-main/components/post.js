@@ -512,28 +512,26 @@ const Auxiliary = (props) => {
 
 const DisplayMedia = (props) => {
   const result = <></>;
-  if (props.data.auxiliary.media.indexOf("png") > -1) {
-    result = (
-      <div
-        className="mb-3 bg-gray-600 rounded flex"
+  result = (
+    <div
+      className="mb-3 bg-gray-600 rounded flex"
+      style={{
+        minHeight: "250px",
+        minHeight: "250px",
+      }}
+    >
+      <img
+        id={props.data.id}
         style={{
-          minHeight: "250px",
-          minHeight: "250px",
+          maxWidth: "630px",
+          maxHeight: "1200px",
+          objectFit: "cover",
+          overflow: "hidden",
         }}
-      >
-        <img
-          id={props.data.id}
-          style={{
-            maxWidth: "630px",
-            maxHeight: "1200px",
-            objectFit: "cover",
-            overflow: "hidden",
-          }}
-          className="rounded m-auto"
-        />
-      </div>
-    );
-    getFile(props.data);
-  }
+        className="rounded m-auto"
+      />
+    </div>
+  );
+  getFile(props.data);
   return result;
 };
