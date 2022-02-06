@@ -366,9 +366,17 @@ const Settings = (props) => {
                   comments or posts made in the past. If you wish to delete all
                   of your data, please contact support.
                 </p>
-                <button className="bg-red-500 py-2 px-3 font-bold text-white text-sm rounded-lg mt-2 active:shadow-inner active:bg-red-700">
-                  Delete my account
-                </button>
+                <div className="flex flex-row space-x-3">
+                  <button className="bg-red-500 py-2 px-3 font-bold text-white text-sm rounded-lg mt-2 active:shadow-inner active:bg-red-700">
+                    Delete my account
+                  </button>
+                  <a
+                    className="bg-yellow-500 py-2 px-3 font-bold text-white text-sm rounded-lg mt-2 active:shadow-inner active:bg-yellow-700"
+                    href="/signout"
+                  >
+                    Sign Out
+                  </a>
+                </div>
               </div>
             </div>
           </div>
