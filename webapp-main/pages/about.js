@@ -115,7 +115,7 @@ export default function About() {
     return (
       <div className="h-screen w-screen relative">
         <Head>
-          <title>AGAP - The Social Safety Network</title>
+          <title>About | AGAP</title>
         </Head>
         <Navbar data={userData} />
         
@@ -131,7 +131,7 @@ export default function About() {
             <span class="block text-[#10B4DA] xl:inline">right here and right now.</span>
           </h1>
           <div class="relative flex flex-col sm:flex-row sm:space-x-4">
-            <a href="#login" class="flex items-center w-full px-6 py-3 mb-3 text-lg text-white bg-[#308C8F] rounded-md sm:mb-0 hover:bg-indigo-700 sm:w-auto">
+            <a href="/" class="flex items-center w-full px-6 py-3 mb-3 text-lg text-white bg-[#308C8F] rounded-md sm:mb-0 hover:bg-indigo-700 sm:w-auto">
               Go To AGAP Home
               <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </a>
@@ -140,7 +140,7 @@ export default function About() {
       </div>
       <div class="w-full md:w-1/2">
         <div class="w-full h-auto overflow-hidden rounded-md shadow-xl sm:rounded-xl">
-            <img src="https://firebasestorage.googleapis.com/v0/b/agap-3fe00.appspot.com/o/About%20Us%2FAmazon%201999.jpg?alt=media&token=b93ce659-3721-4f9d-bb60-2a98de5fab66"></img>
+            <img src="https://firebasestorage.googleapis.com/v0/b/agap-3fe00.appspot.com/o/About%20Us%2F5.jpg?alt=media&token=8fb3d7ce-cde1-4489-aecd-ef85eb590076"></img>
           </div>
       </div>
     </div>
