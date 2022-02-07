@@ -11,7 +11,7 @@ export default class Navbar extends Component {
       <>
         <div className="w-full hidden lg:block mb-3 shadow py-3">
           <nav className="flex grid grid-cols-10 gap-x-4 mx-8 xl:mx-16 2xl:mx-64 items-center">
-            <a href="#" className="flex col-span-2 items-center">
+            <a href="/" className="flex col-span-2 items-center">
               <Image src="/AGAP.png" width={40} height={40} />
               <span className="self-center text-4xl font-extrabold whitespace-nowrap dark:text-white ml-2">
                 AGAP
