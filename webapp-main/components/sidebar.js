@@ -18,7 +18,7 @@ export default class Sidebar extends Component {
               </Link>
             </li>
             <li>
-              <Link href="/notifications">
+              <Link href="/about">
                 <a>About Us</a>
               </Link>
             </li>
