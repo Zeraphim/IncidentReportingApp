@@ -224,7 +224,7 @@ export default function About() {
                 <div class="flex flex-col items-center justify-center p-10">
                     <img class="w-32 h-32 mb-6 rounded-full" src="https://firebasestorage.googleapis.com/v0/b/agap-3fe00.appspot.com/o/About%20Us%2Fmember_jm.png?alt=media&token=9e5ad60f-5415-4af3-9f94-2bce07863ed7"></img>
                     <h2 class="text-lg font-medium">DELA VEGA, John Emmanuel</h2>
-                    <p class="font-medium text-blue-500">Frontent Software Engineer</p>    
+                    <p class="font-medium text-blue-500">Frontend Software Engineer</p>    
                   </div>
 
                 <div class="flex border-t border-gray-200 divide-x divide-gray-200">
