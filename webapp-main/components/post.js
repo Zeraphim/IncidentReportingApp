@@ -524,18 +524,21 @@ const DisplayMedia = (props) => {
         minHeight: "250px",
       }}
     >
-      <img
-        id={props.data.id}
-        style={{
-          maxWidth: "630px",
-          maxHeight: "1200px",
-          objectFit: "cover",
-          overflow: "hidden",
-        }}
-        className="rounded m-auto"
-      />
+      {determineTypeofMedia(props)}
     </div>
   );
-  getFile(props.data);
+
   return result;
 };
+
+function determineTypeofMedia(props) {
+  let file = props.data.auxiliary.media.split(".");
+  const extensions = ["jpg", "png", "bmp", "jpeg"];
+  const [media, setMedia] = useState(<></>);
+  if (extensions.indexOf(file[1]) > -1) {
+    getFile(props.data, "picture", setMedia);
+  } else {
+    getFile(props.data, "video", setMedia);
+  }
+  return <>{media}</>;
+}

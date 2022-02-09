@@ -48,11 +48,37 @@ export default function UploadFile(file, path) {
   );
 }
 
-export function getFile(post) {
+export function getFile(post, type, setMedia) {
   const storage = getStorage();
   const storageRef = ref(storage, `${post.id}/${post.auxiliary.media}`);
+  let output = <></>;
   getDownloadURL(storageRef).then((url) => {
-    const img = document.getElementById(post.id);
-    img.setAttribute("src", url);
+    if (type == "picture") {
+      output = (
+        <img
+          style={{
+            maxWidth: "630px",
+            maxHeight: "1200px",
+            objectFit: "cover",
+            overflow: "hidden",
+          }}
+          src={url}
+          className="rounded m-auto"
+        />
+      );
+    } else {
+      output = (
+        <video
+          style={{
+            maxHeight: "1200px",
+            maxWidth: "630px",
+          }}
+          controls
+        >
+          <source src={url} type="video/mp4" />
+        </video>
+      );
+    }
+    setMedia(output);
   });
 }
