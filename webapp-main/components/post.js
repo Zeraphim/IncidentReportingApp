@@ -532,10 +532,12 @@ const DisplayMedia = (props) => {
 };
 
 function determineTypeofMedia(props) {
-  let file = props.data.auxiliary.media.split(".");
+  let file = props.data.auxiliary.media;
+  var re = /(?:\.([^.]+))?$/;
+  let ext = re.exec(file)[1];
   const extensions = ["jpg", "png", "bmp", "jpeg"];
   const [media, setMedia] = useState(<></>);
-  if (extensions.indexOf(file[1]) > -1) {
+  if (extensions.indexOf(ext.toLowerCase()) > -1) {
     getFile(props.data, "picture", setMedia);
   } else {
     getFile(props.data, "video", setMedia);
