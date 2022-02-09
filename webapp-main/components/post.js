@@ -112,7 +112,7 @@ export default class Post extends Component {
                   this.props.post.owner_data.points.post_points +
                     this.props.post.owner_data.points.comment_points
                 )}{" "}
-                <b>| {this.props.post.owner_data.city}</b>{" "}
+                <b>| {convertCityIDtoCity(this.props.post.city_id)}</b>{" "}
               </p>
             </div>
           </div>
@@ -543,4 +543,29 @@ function determineTypeofMedia(props) {
     getFile(props.data, "video", setMedia);
   }
   return <>{media}</>;
+}
+
+function convertCityIDtoCity(id) {
+  const options = [
+    { label: "Caloocan", id: "caloocan" },
+    { label: "Malabon", id: "malabon" },
+    { label: "Navotas", id: "navotas" },
+    { label: "Valenzuela", id: "valenzuela" },
+    { label: "Quezon City", id: "qc" },
+    { label: "Marikina", id: "marikina" },
+    { label: "Pasig", id: "pasig" },
+    { label: "Taguig", id: "taguig" },
+    { label: "Makati", id: "makati" },
+    { label: "Manila", id: "manila" },
+    { label: "Mandaluyong", id: "mandaluyong" },
+    { label: "San Juan", id: "sanjuan" },
+    { label: "Pasay", id: "pasay" },
+    { label: "Paranaque", id: "paranaque" },
+    { label: "Las Pinas", id: "laspinas" },
+    { label: "Muntinlupa", id: "muntinlupa" },
+  ];
+  for (let i = 0; i < options.length; i++) {
+    if (options[i].id == id) return options[i].label;
+    else continue;
+  }
 }
