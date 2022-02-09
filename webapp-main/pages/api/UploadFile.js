@@ -72,6 +72,8 @@ export function getFile(post, type, setMedia) {
           style={{
             maxHeight: "1200px",
             maxWidth: "630px",
+            objectFit: "cover",
+            overflow: "hidden",
           }}
           controls
         >
