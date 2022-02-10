@@ -28,7 +28,7 @@ Tested on Windows 10
 
     https://incident-reporting-app.vercel.app/
 
-## 💖 "AGAP informs. AGAP shares. AGAP protects. made for Filipino families. " 💖
+## 💖 AGAP informs. AGAP shares. AGAP protects. made for Filipino families. 💖
 By 2nd Year Computer Science undergraduates from Mapúa University, namely:
 <li>ANTONIO, Karmin Ida Mae C.</li>
 <li>DELA VEGA, John Emmanuel J.</li>
