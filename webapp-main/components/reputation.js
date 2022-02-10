@@ -7,14 +7,14 @@ export default class Reputation extends Component {
         <div className="p-5 bg-white h-auto rounded-lg shadow-lg invisible lg:visible select-none">
           <div className="grid grid-cols-2 mb-3">
             <div className="col-span-1">
-              <p className="text-sm 2xl:text-md">Post Reputation</p>
+              <p className="text-sm 2xl:text-md">Post Rep</p>
               <p className="font-bold font-number text-2xl">
                 {this.props.user.points.post_points}
               </p>
             </div>
             <div className="col-span-1">
-              <p className="text-sm 2xl:text-md">Comment Reputation</p>
-              <p className="font-bold font-number text-2xl">
+              <p className="text-sm 2xl:text-md">Comment Rep</p>
+              <p className="font-bold font-number text-2xl align-middle">
                 {this.props.user.points.comment_points}
               </p>
             </div>
