@@ -1,4 +1,4 @@
-# AGAP: AGAP: Incident Reporting Web Application
+# AGAP: Incident Reporting Web Application
 
 ## 💡 What is AGAP?💡
 
