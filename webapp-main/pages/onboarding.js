@@ -8,37 +8,41 @@ export default function Onboarding() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      
-      <div class="px-2 pt-32 bg-white md:px-0">
 
-      <div class="container items-center max-w-6xl px-5 mx-auto space-y-6 text-center">
-        <h1 class="text-4xl font-extrabold tracking-tight text-left text-gray-900 sm:text-5xl md:text-6xl md:text-center">
-            <span class="block">Welcome To <span class="block mt-1 text-[#10B4DA] lg:inline lg:mt-0">AGAP</span></span>
-        </h1>
-        <p class="w-full mx-auto text-base text-left text-gray-500 md:max-w-md sm:text-lg lg:text-2xl md:max-w-3xl md:text-center">
-            An Incident Web-Reporting App that updates you with alarming events and happenings within Metro Manila, Philippines.
-        </p>
-        <div class="relative flex flex-col justify-center md:flex-row md:space-x-4">
-            <a href="#_" class="flex items-center w-full px-6 py-3 mb-3 text-lg text-white bg-[#308C8F] rounded-md md:mb-0 hover:bg-purple-700 md:w-auto">
-                Next
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-            </a>
-        </div>
+      <div>
+ <div className=" flex flex-col items-center mr-auto ml-auto
+   relative lg:flex-row">
+  <div className="bg-[#308C8F] flex w-full h-full justify-center items-center  overflow-hidden
+    lg:w-1/2 lg:justify-end lg:bottom-0 lg:left-0 lg:items-center"><img src="https://firebasestorage.googleapis.com/v0/b/agap-3fe00.appspot.com/o/Onboarding%2F1.png?alt=media&token=1ecd253b-557f-4f01-a84f-ea01c6c42897"
+    className="h-auto w-full  object-contain object-top lg:w-auto lg:h-full"/></div>
+  <div className="flex justify-end mr-auto ml-auto  relative max-w-xl xl:pr-32
+    lg:max-w-screen-xl">
+   <div className="mb-16  lg:pr-5 lg:max-w-lg lg:mb-0">
+    <div className="mb-6  max-w-xl">
+     <div className="text-gray-900 mb-6  max-w-lg sm:text-4xl sm:leading-none">
+      <p className="font-bold text-3xl tracking-tight  text-gray-900 sm:text-4xl
+        sm:leading-none">Welcome to</p>
+      <p className="inline-block font-bold text-3xl tracking-tight mr-2  text-gray-900
+        sm:text-4xl sm:leading-none">to</p>
+      <p className="inline-block font-bold text-3xl tracking-tight  text-[#10B4DA]
+        sm:text-4xl sm:leading-none">AGAP!</p>
+     </div>
+     <p className="text-base  text-gray-700 md:text-lg">An Incident Web-Reporting App that updates you with alarming events and happenings within Metro Manila, Philippines.</p>
     </div>
-    <div class="w-auto pt-7 pb-7 bg-[#308C8F] mt-7">
 
-    <div class="box-border flex flex-col items-center content-center px-8 mx-auto leading-6 text-black border-0 border-gray-300 border-solid md:flex-row max-w-7xl lg:px-16">
+    <div className="flex items-center mt-4 "><a href="/">
+    <button className="h-12 rounded-lg mr-6 mb-0
+      pr-6 pl-6 text-medium font-semibold tracking-wide shadow-md inline-flex items-center justify-center
+      bg-[#308C8F] text-white transition duration-200 hover:bg-blue-900 focus:shadow-outline focus:outline-none"
+      >Get Started!</button></a></div>
+   </div>
+  </div>
+ </div>
+</div>
 
-        <div class=" sm:mx-auto sm:space-y-4">
-            <img src="https://firebasestorage.googleapis.com/v0/b/agap-3fe00.appspot.com/o/Onboarding%2F1.png?alt=media&token=ad9f9271-c467-4aeb-a6ab-1e2fbe6a8e2f" class=" "></img>
-        </div>
 
-    </div>
-    </div>
-      </div>
+
+
     </div>
   );
 }
