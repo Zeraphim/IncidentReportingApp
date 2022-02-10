@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-export default function Onboarding2() {
+export default function Onboarding3() {
   return (
     <div className="h-screen w-screen relative">
       <Head>
@@ -16,7 +16,7 @@ export default function Onboarding2() {
   {/* Pic Section */}
 
   <div className="bg-[#308C8F] flex w-full h-full justify-center items-center  overflow-hidden
-    lg:w-1/2 lg:justify-end lg:bottom-0 lg:left-0 lg:items-center"><img src="https://firebasestorage.googleapis.com/v0/b/agap-3fe00.appspot.com/o/Onboarding%2F2.png?alt=media&token=7e0cf936-c0f0-4af5-b0f8-cdb2fe4292c8"
+    lg:w-1/2 lg:justify-end lg:bottom-0 lg:left-0 lg:items-center"><img src="https://firebasestorage.googleapis.com/v0/b/agap-3fe00.appspot.com/o/Onboarding%2F3.png?alt=media&token=35f15105-0388-434d-b0bd-8ee126b60909"
     className="h-auto w-full  object-contain object-top lg:w-auto lg:h-full"/></div>
 
     {/* Text Section */}
@@ -27,18 +27,18 @@ export default function Onboarding2() {
     <div className="mb-6  max-w-xl">
      <div className="text-gray-900 mb-6  max-w-lg sm:text-4xl sm:leading-none">
       <p className="font-bold text-3xl tracking-tight  text-gray-900 sm:text-4xl
-        sm:leading-none">Report an</p>
+        sm:leading-none">Real Time</p>
       <p className="inline-block font-bold text-3xl tracking-tight  text-[#10B4DA]
-        sm:text-4xl sm:leading-none">Incident</p>
+        sm:text-4xl sm:leading-none">Map</p>
      </div>
-     <p className="text-base  text-gray-700 md:text-lg">Submit an Incident Report to inform and protect the public community through posting pictures, videos or a narrative.</p>
+     <p className="text-base  text-gray-700 md:text-lg">Check out our real-time map to keep track with the reported incidents and share it to notify other local citizens.</p>
     </div>
 
-    <div className="flex items-center mt-4 "><a href="/onboarding3">
+    <div className="flex items-center mt-4 "><a href="/login">
     <button className="h-12 rounded-lg mr-6 mb-0
       pr-6 pl-6 text-medium font-semibold tracking-wide shadow-md inline-flex items-center justify-center
       bg-[#308C8F] text-white transition duration-200 hover:bg-blue-900 focus:shadow-outline focus:outline-none"
-      >Next!</button></a></div>
+      >Get Started!</button></a></div>
 
       
    </div>
