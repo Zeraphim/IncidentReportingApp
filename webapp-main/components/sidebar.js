@@ -9,27 +9,28 @@ export default class Sidebar extends Component {
           <ul className="text-xl text-slate-900 font-bold 2xl:text-2xl space-y-3 mb-5">
             <li>
               <Link href="/">
-                <a>Home</a>
+                <a className="hover:text-[#308C8F] hover:text-shadow-lg hover:duration-300">Home</a>
               </Link>
             </li>
             <li>
               <Link href="/maps">
-                <a>Live Map</a>
+                <a className="hover:text-[#308C8F] hover:text-shadow-lg hover:duration-300">Live Map</a>
               </Link>
             </li>
             <li>
               <Link href="/about">
-                <a>About Us</a>
+                <a className="hover:text-[#308C8F] hover:text-shadow-lg hover:duration-300">About Us</a>
               </Link>
             </li>
           </ul>
+
           <div className="mb-5">
             <p>Your current location is</p>
             <p className="text-xl font-bold">
               {this.props.user.city}, Philippines
             </p>
             <Link href="/settings/location">
-              <a>Is this wrong?</a>
+              <a className="hover:text-[#308C8F] hover:text-shadow-lg hover:duration-300">Is this wrong?</a>
             </Link>
           </div>
 

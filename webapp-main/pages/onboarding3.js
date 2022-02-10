@@ -39,7 +39,6 @@ export default function Onboarding3() {
       pr-6 pl-6 text-medium font-semibold tracking-wide shadow-md inline-flex items-center justify-center
       bg-[#308C8F] text-white transition duration-200 hover:bg-blue-900 focus:shadow-outline focus:outline-none"
       >Get Started!</button></a></div>
-
       
    </div>
   </div>
