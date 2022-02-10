@@ -1,4 +1,4 @@
-# Monitoring and Assessing Marine Debris Application (M.A.M.A) - Hydronautics Team
+# AGAP: AGAP: Incident Reporting Web Application
 
 ## 💡 What is AGAP?💡
 
