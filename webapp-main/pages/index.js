@@ -27,7 +27,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import MobileNavBar from "../components/mobile_navbar";
 
 // Checks if there's a cookie in the browser, if there's none redirect to login page
-function checkSID() {
+function checkCookie() {
   const user = getAuth();
   const router = useRouter();
 
@@ -40,15 +40,6 @@ function checkSID() {
   }
 }
 
-// For testing
-function addSID() {
-  cookie.set("SID", "ABCD", { expires: 1 / 24 });
-}
-
-// For testing
-function removeSID() {
-  cookie.remove("SID");
-}
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -64,7 +55,10 @@ export default function Home() {
       comment_points: 0,
     },
   });
+
+
   const auth = getAuth();
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
@@ -80,6 +74,9 @@ export default function Home() {
       // ...
     } else {
       window.location.replace("/login");
+      
+
+      // insert function
     }
   });
 

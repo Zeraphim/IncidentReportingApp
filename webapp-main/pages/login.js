@@ -11,6 +11,10 @@ import { useRef, useState } from "react";
 import { login, useAuth } from "../modules/firebase";
 import Head from "next/head";
 
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+
+
 function addCookie(val) {
   cookie.set("SID", val, { expires: 1 / 24 });
 }
@@ -23,6 +27,35 @@ export default function Login() {
   const upload = (data) => {
     handleLogin(data);
   };
+
+  function checkCookie() {
+
+    const router = useRouter();
+
+    console.log(cookie.get("firstTime"))
+  
+    if(cookie.get("firstTime") === undefined) {
+
+      addFirstTimeCookie();
+
+      useEffect(() => {
+        setTimeout(() => {
+          router.push("/onboarding");
+        }, 500);
+      }, []);
+    }
+  }
+
+  // For testing
+  function addFirstTimeCookie() {
+    cookie.set("firstTime", "1", { expires: 1 / 24 });
+  }
+  
+  // For testing
+  function removeCookie() {
+    cookie.remove("firstTime");
+  }
+  
 
   async function handleLogin(data) {
     setLoading(true);
@@ -40,7 +73,10 @@ export default function Login() {
     window.location.replace("/");
   }
 
+
   return (
+    <>
+    { checkCookie() }
     <div className="h-screen">
       <Head>
         <title>Log In | AGAP</title>
@@ -115,5 +151,6 @@ export default function Login() {
         </div>
       </div>
     </div>
+    </>
   );
 }
